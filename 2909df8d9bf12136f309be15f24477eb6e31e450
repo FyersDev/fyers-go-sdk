@@ -1,0 +1,34 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.0.37",
+  "base_commit_sha": "2909df8d9bf12136f309be15f24477eb6e31e450",
+  "prompts": {
+    "4772efbcd7960c43": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "3a4448f3-bcc2-4791-8b91-5168fee05839",
+        "model": "default"
+      },
+      "human_author": "kishore-fyers <kishorekumar@fyers.in>",
+      "messages": [],
+      "total_additions": 12,
+      "total_deletions": 6,
+      "accepted_lines": 5,
+      "overriden_lines": 1
+    },
+    "96793cbe8175e6c2": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "d6f8b337-36a5-4a9f-a7dc-9d786fe218db",
+        "model": "default"
+      },
+      "human_author": "kishore-fyers <kishorekumar@fyers.in>",
+      "messages": [],
+      "total_additions": 187,
+      "total_deletions": 69,
+      "accepted_lines": 125,
+      "overriden_lines": 1
+    }
+  }
+}

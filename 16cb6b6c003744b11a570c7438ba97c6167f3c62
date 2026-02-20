@@ -1,0 +1,36 @@
+README.md
+  8e75ef387d64c7f3 354-369,377-383,389
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.0.37",
+  "base_commit_sha": "16cb6b6c003744b11a570c7438ba97c6167f3c62",
+  "prompts": {
+    "1716abb3a4bf4aef": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "371e440a-70f4-48ab-8952-7cbc0d6e86a0",
+        "model": "default"
+      },
+      "human_author": "kishore-fyers <kishorekumar@fyers.in>",
+      "messages": [],
+      "total_additions": 66,
+      "total_deletions": 0,
+      "accepted_lines": 66,
+      "overriden_lines": 0
+    },
+    "8e75ef387d64c7f3": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "94cc97f9-08a2-4e30-87d2-6822ccda5fe3",
+        "model": "default"
+      },
+      "human_author": "kishore-fyers <kishorekumar@fyers.in>",
+      "messages": [],
+      "total_additions": 24,
+      "total_deletions": 2,
+      "accepted_lines": 24,
+      "overriden_lines": 0
+    }
+  }
+}

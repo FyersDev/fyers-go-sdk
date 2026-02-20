@@ -1,0 +1,25 @@
+http.go
+  42e6992e712edb72 78-79
+gtt_order.go
+  42e6992e712edb72 22-25,27,39,45-47
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.0.37",
+  "base_commit_sha": "4145a7353e7b65ac334fa1cbe4b3eef8996d3012",
+  "prompts": {
+    "42e6992e712edb72": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "c8058670-e46e-4b1d-92e9-8398b538f892",
+        "model": "default"
+      },
+      "human_author": "kishore-fyers <kishorekumar@fyers.in>",
+      "messages": [],
+      "total_additions": 725,
+      "total_deletions": 398,
+      "accepted_lines": 373,
+      "overriden_lines": 3
+    }
+  }
+}

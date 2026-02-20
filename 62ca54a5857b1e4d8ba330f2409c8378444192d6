@@ -1,0 +1,29 @@
+README.md
+  42e6992e712edb72 55-57,59,61,65,67-69,73,80-87,93-96,115-116,119,122-124,126-127,129-130,135-229,233,236-241,244-248,254-303,307,310,312,315,320,324,326,329,332,335,338,341,344-345,348,351-352,355,358
+data.go
+  42e6992e712edb72 4,8,26-30,32,40,42-44,52-57
+test/test_cases.json
+  42e6992e712edb72 1-282
+test/sdk_test.go
+  42e6992e712edb72 1-930
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.0.37",
+  "base_commit_sha": "62ca54a5857b1e4d8ba330f2409c8378444192d6",
+  "prompts": {
+    "42e6992e712edb72": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "c8058670-e46e-4b1d-92e9-8398b538f892",
+        "model": "default"
+      },
+      "human_author": "kishore-fyers <kishorekumar@fyers.in>",
+      "messages": [],
+      "total_additions": 2798,
+      "total_deletions": 981,
+      "accepted_lines": 1473,
+      "overriden_lines": 101
+    }
+  }
+}

@@ -1,0 +1,25 @@
+auth.go
+  42e6992e712edb72 71,79-81
+api.go
+  42e6992e712edb72 12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.0.37",
+  "base_commit_sha": "b45d3fd443ad74e87dfdc9321f17c024ed4a1e49",
+  "prompts": {
+    "42e6992e712edb72": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "c8058670-e46e-4b1d-92e9-8398b538f892",
+        "model": "default"
+      },
+      "human_author": "kishore-fyers <kishorekumar@fyers.in>",
+      "messages": [],
+      "total_additions": 29,
+      "total_deletions": 23,
+      "accepted_lines": 6,
+      "overriden_lines": 1
+    }
+  }
+}

@@ -1,0 +1,23 @@
+examples/fyers/fyers.go
+  6025c7095296036b 6-7,17-24,934,948-951,962-963
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.0.37",
+  "base_commit_sha": "da14e94688773c6fd74748dd991a98ec82e23b0b",
+  "prompts": {
+    "6025c7095296036b": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "9e18abf7-1193-4801-a303-08a0c130b1df",
+        "model": "default"
+      },
+      "human_author": "kishore-fyers <kishorekumar@fyers.in>",
+      "messages": [],
+      "total_additions": 201,
+      "total_deletions": 112,
+      "accepted_lines": 17,
+      "overriden_lines": 19
+    }
+  }
+}

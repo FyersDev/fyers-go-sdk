@@ -1,0 +1,25 @@
+websocket/data_ws.go
+  42e6992e712edb72 157-241,928-957,977,1002,1025-1026,1029-1030,1047,1058-1059,1062-1063,1073
+data_stream.go
+  42e6992e712edb72 66-67
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.0.37",
+  "base_commit_sha": "85ce084c82aeb72d98cd51984b79ed4565af4861",
+  "prompts": {
+    "42e6992e712edb72": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "c8058670-e46e-4b1d-92e9-8398b538f892",
+        "model": "default"
+      },
+      "human_author": "kishore-fyers <kishorekumar@fyers.in>",
+      "messages": [],
+      "total_additions": 158,
+      "total_deletions": 42,
+      "accepted_lines": 129,
+      "overriden_lines": 0
+    }
+  }
+}

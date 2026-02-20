@@ -1,0 +1,23 @@
+README.md
+  8e75ef387d64c7f3 137
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.0.37",
+  "base_commit_sha": "a144dab4a32f386263664140ae01d315d31e3a3e",
+  "prompts": {
+    "8e75ef387d64c7f3": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "94cc97f9-08a2-4e30-87d2-6822ccda5fe3",
+        "model": "default"
+      },
+      "human_author": "kishore-fyers <kishorekumar@fyers.in>",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    }
+  }
+}

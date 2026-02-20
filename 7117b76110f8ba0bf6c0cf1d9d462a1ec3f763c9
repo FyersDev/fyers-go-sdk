@@ -1,0 +1,25 @@
+models.go
+  42e6992e712edb72 386,390-396
+trade_operations.go
+  42e6992e712edb72 37-38,40-42,49-62,97-103,110-116,123-131
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.0.37",
+  "base_commit_sha": "7117b76110f8ba0bf6c0cf1d9d462a1ec3f763c9",
+  "prompts": {
+    "42e6992e712edb72": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "c8058670-e46e-4b1d-92e9-8398b538f892",
+        "model": "default"
+      },
+      "human_author": "kishore-fyers <kishorekumar@fyers.in>",
+      "messages": [],
+      "total_additions": 75,
+      "total_deletions": 16,
+      "accepted_lines": 51,
+      "overriden_lines": 3
+    }
+  }
+}

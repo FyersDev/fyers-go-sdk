@@ -21,20 +21,6 @@ Fyers API is a set of REST-like APIs that provide integration with our in-house 
 - **Error Handling**: Comprehensive error handling with detailed error messages
 - **Type Safety**: Strongly typed Go structs for all API responses
 - **Examples**: Extensive examples for all major functionality
-- **Testing**: Comprehensive test suite with mock responses
-
-## 📋 Table of Contents
-
-- [Compatible Go Versions](#compatible-go-versions)
-- [Installation](#installation)
-- [Quick Start](#quick-start)
-- [Authentication](#authentication)
-- [API Reference](#api-reference)
-- [Examples](#examples)
-- [WebSocket Streaming](#websocket-streaming)
-- [Error Handling](#error-handling)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Compatible Go Versions
 

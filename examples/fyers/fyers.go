@@ -1,19 +1,19 @@
 package main
 
 import (
-	// "fmt"
 	"fmt"
-	fyersgosdk "fyers-go-sdk"
-	// fyersws "fyers-go-sdk/websocket"
 	// "os"
 	// "os/signal"
 	// "syscall"
+
+	fyersgosdk "github.com/FyersDev/fyers-go-sdk"
+	// fyersws "github.com/FyersDev/fyers-go-sdk/websocket"
 )
 
 // Get Auth Code URL
 func main() {
 	appId := "AAAAAAAAA-100"
-	appSecret := "XKCP7PAISD"
+	appSecret := "XY..."
 	redirectUrl := "https://trade.fyers.in/api-login/redirect-uri/index.html"
 
 	fyClient := fyersgosdk.SetClientData(appId, appSecret, redirectUrl)
@@ -23,7 +23,7 @@ func main() {
 // Generate Access Token
 // func main() {
 // 	appId := "AAAAAAAAA-100"
-// 	appSecret := "XKCP7PAISD"
+// 	appSecret := "XY..."
 // 	redirectUrl := "https://trade.fyers.in/api-login/redirect-uri/index.html"
 // 	authToken := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBfaWQiOiJNMFI0V1cxUFlVIiwidXVpZCI6IjRkYWU5MjQ0NmY4MDRlMWM5Y2RhNjE5NmU0MmY0MjE0IiwiaXBBZGRyIjoiIiwibm9uY2UiOiIiLCJzY29wZSI6IiIsImRpc3BsYXlfbmFtZSI6IllLMDQzOTEiLCJvbXMiOiJLMSIsImhzbV9rZXkiOiJkNWU1YWY5ZmM0NWMwMzZhY2FkZmE2M2ZhZDc1YzZhMmEwZjc3ZDRmMDFlMWJkMTNlMTc4YWI3YyIsImlzRGRwaUVuYWJsZWQiOiJZIiwiaXNNdGZFbmFibGVkIjoiWSIsImF1ZCI6IltcImQ6MVwiLFwiZDoyXCIsXCJ4OjBcIixcIng6MVwiLFwieDoyXCJdIiwiZXhwIjoxNzcxNDIyMDMwLCJpYXQiOjE3NzEzOTIwMzAsImlzcyI6ImFwaS5sb2dpbi5meWVycy5pbiIsIm5iZiI6MTc3MTM5MjAzMCwic3ViIjoiYXV0aF9jb2RlIn0.rnEMaa8MigGEs_LSwEGoc-y0UbqjVRIwahvVccssMwU"
 
@@ -38,7 +38,7 @@ func main() {
 // Generate Access Token From Refresh Token
 // func main() {
 // 	appId := "AAAAAAAAA-100"
-// 	appSecret := "XKCP7PAISD"
+// 	appSecret := "XY..."
 // 	redirectUrl := "https://trade.fyers.in/api-login/redirect-uri/index.html"
 // 	refreshToken := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiZDoxIiwiZDoyIiwieDowIiwieDoxIiwieDoyIl0sImF0X2hhc2giOiJnQUFBQUFCcGxVNE1xZUpQUFdYNWhWQzcyNkZQVTVXTHpjcFRXMjQ3OGFDdGJMemwybE42TmkzUEZpU0xKMHVDRldPVE9Fc3JIbjVlbWxVdVNiQ2F2UXlySTh0LXozeFdaWFo4MFRXZWFxb0JKeVdtbFFfYVNacz0iLCJkaXNwbGF5X25hbWUiOiIiLCJvbXMiOiJLMSIsImhzbV9rZXkiOiJkNWU1YWY5ZmM0NWMwMzZhY2FkZmE2M2ZhZDc1YzZhMmEwZjc3ZDRmMDFlMWJkMTNlMTc4YWI3YyIsImlzRGRwaUVuYWJsZWQiOiJZIiwiaXNNdGZFbmFibGVkIjoiWSIsImZ5X2lkIjoiWUswNDM5MSIsImFwcFR5cGUiOjEwMCwiZXhwIjoxNzcyNjcwNjAwLCJpYXQiOjE3NzEzOTI1MjQsImlzcyI6ImFwaS5meWVycy5pbiIsIm5iZiI6MTc3MTM5MjUyNCwic3ViIjoicmVmcmVzaF90b2tlbiJ9.ogZNRYM6lWQ4RRpVeOMuzpwmbAK9MLhPB89UBaFtxCY"
 // 	pin := "0000"

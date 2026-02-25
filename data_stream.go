@@ -2,10 +2,11 @@ package fyersgosdk
 
 import (
 	"fmt"
-	fyersws "fyers-go-sdk/websocket"
 	"os"
 	"os/signal"
 	"syscall"
+
+	fyersws "github.com/FyersDev/fyers-go-sdk/websocket"
 )
 
 func DataSocket(fyModel *FyersModel, webSocketRequest DataSocketRequest) (map[string]interface{}, error) {

@@ -32,7 +32,7 @@ Using Go 1.19 or newer is recommended for security and tooling support.
 ## 📦 Installation
 
 ```bash
-git clone https://github.com/kishore-fyers/fyers-go-sdk.git
+go get github.com/FyersDev/fyers-go-sdk
 ```
 
 ## 🚀 Quick Start
@@ -45,24 +45,29 @@ package main
 import (
     "fmt"
     "log"
-    fyersgosdk "github.com/your-username/fyersgosdk"
+    fyersgosdk "github.com/FyersDev/fyers-go-sdk"
 )
 
 func main() {
+    appId := "AAAAAAAAA-100"
+	appSecret := "XY...."
+	redirectUrl := "https://trade.fyers.in/api-login/redirect-uri/index.html"
+
     // 1. Initialize client (auth only)
-    fyClient := fyersgosdk.SetClientData("YOUR_APP_ID", "YOUR_APP_SECRET", "YOUR_REDIRECT_URL")
+    fyClient := fyersgosdk.SetClientData(appId, appSecret, redirectUrl)
     fmt.Println("Login URL:", fyClient.GetLoginURL())
 
     // 2. After user authorizes, exchange auth code for access token
-    authCode := "AUTH_CODE_FROM_REDIRECT"
+    authCode := "eyjb...."
     response, err := fyClient.GenerateAccessToken(authCode, fyClient)
     if err != nil {
         log.Fatal("Error generating access token:", err)
     }
-    // Parse response JSON to get access_token; then create model for API calls
+    fmt.Println("Response:", response)
 
     // 3. Use FyersModel for all API calls (profile, orders, data, etc.)
-    fyModel := fyersgosdk.NewFyersModel("YOUR_APP_ID", "ACCESS_TOKEN")
+    accessToken := "eyjb...."
+    fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
     profile, err := fyModel.GetProfile()
     if err != nil {
         log.Fatal("Error getting profile:", err)
@@ -74,24 +79,126 @@ func main() {
 ### Get Market Data
 
 ```go
-fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
-// Quotes (up to 50 symbols)
-quotes, err := fyModel.GetStockQuotes([]string{"NSE:SBIN-EQ", "NSE:NIFTY50-INDEX"})
-// History
-history, err := fyModel.GetHistory(fyersgosdk.HistoryRequest{
-    Symbol: "NSE:SBIN-EQ", Resolution: "30", DateFormat: "1",
-    RangeFrom: "2021-01-01", RangeTo: "2021-01-02", ContFlag: "",
-})
+package main
+
+import (
+    "fmt"
+    "log"
+    fyersgosdk "github.com/FyersDev/fyers-go-sdk"
+)
+
+func main() {
+    appId := "AAAAAAAAA-100"
+	accessToken := "eyjb...."
+
+    fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+    // Quotes
+    symbols := []string{"NSE:SBIN-EQ", "NSE:NIFTY50-INDEX"} // Quotes (up to 50 symbols)
+    quotes, err := fyModel.GetStockQuotes(symbols)
+    fmt.Println("Quotes:", quotes)
+
+    // History
+    history, err := fyModel.GetHistory(fyersgosdk.HistoryRequest{
+        Symbol: "NSE:SBIN-EQ", Resolution: "30", DateFormat: "1",
+        RangeFrom: "2021-01-01", RangeTo: "2021-01-02", ContFlag: "",
+    })
+    fmt.Println("History:", history)
+}
 ```
 
 ### Place an Order
 
 ```go
-fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
-response, err := fyModel.SingleOrderAction(fyersgosdk.OrderRequest{
-    Symbol: "NSE:IDEA-EQ", Qty: 1, Type: 1, Side: 1, ProductType: "CNC",
-    LimitPrice: 100, Validity: "DAY", DisclosedQty: 0, OfflineOrder: false,
-})
+package main
+
+import (
+    "fmt"
+    "log"
+    fyersgosdk "github.com/FyersDev/fyers-go-sdk"
+)
+
+func main() {
+    appId := "AAAAAAAAA-100"
+	accessToken := "eyjb...."
+
+    // Place Order
+    fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+    response, err := fyModel.SingleOrderAction(fyersgosdk.OrderRequest{
+        Symbol: "NSE:IDEA-EQ", Qty: 1, Type: 1, Side: 1, ProductType: "CNC",
+        LimitPrice: 100, Validity: "DAY", DisclosedQty: 0, OfflineOrder: false,
+    })
+    fmt.Println("Response:", response)
+}
+```
+
+### Web Socket - Market Data Symbol Update
+
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
+
+	fyersws "github.com/FyersDev/fyers-go-sdk/websocket"
+)
+
+func main() {
+	appId := "AAAAAAAAA-100"
+	token := "eyjb...."
+	accessToken := fmt.Sprintf("%s:%s", appId, token)
+	symbols := []string{"NSE:SBIN-EQ"}
+	datatype := "SymbolUpdate" // "SymbolUpdate", "DepthUpdate"
+
+	var dataSocket *fyersws.FyersDataSocket
+	onConnect := func() {
+		dataSocket.Subscribe(symbols, datatype)
+	}
+
+	dataSocket = fyersws.NewFyersDataSocket(
+		accessToken, // Access token in the format "appid:accesstoken"
+		"",          // Log path - leave empty to auto-create logs in the current directory
+		true,        // Lite mode disabled. Set to true if you want a lite response
+		false,       // Save response in a log file instead of printing it
+		true,        // Enable auto-reconnection to WebSocket on disconnection
+		50,          // reconnectRetry: max reconnect attempts (same as Python default; cap 50)
+		onConnect,   // Callback: subscribe on every connect (first + after reconnect)
+		onClose,     // Callback function to handle WebSocket connection close events
+		onError,     // Callback function to handle WebSocket errors
+		onMessage,   // Callback function to handle incoming messages from the WebSocket
+	)
+
+	err := dataSocket.Connect()
+	if err != nil {
+		fmt.Printf("failed to connect to Data Socket: %v", err)
+		return
+	}
+
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
+
+	<-sigChan
+	fmt.Println("\nReceived interrupt signal, closing connection...")
+
+	dataSocket.CloseConnection()
+	fmt.Println("Data Socket connection closed")
+
+}
+
+func onMessage(message fyersws.DataResponse) {
+	fmt.Printf("Response: %s\n", message)
+}
+
+func onError(message fyersws.DataError) {
+	fmt.Printf("Error: %s\n", message)
+}
+
+func onClose(message fyersws.DataClose) {
+	fmt.Printf("Connection closed: %s\n", message)
+}
 ```
 
 ## 🔐 Authentication

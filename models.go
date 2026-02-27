@@ -750,3 +750,25 @@ type Alert struct {
 	AlertId string `json:"alert_id"`
 	Symbol  string `json:"symbol"`
 }
+
+type OrderBookHistoryFilter struct {
+	Exchange []string `json:"exchange_type,omitempty"`
+	Segment  []string `json:"segment_type,omitempty"`
+	Status   []string `json:"status,omitempty"`
+	FromDate string   `json:"from_date,omitempty"`
+	ToDate   string   `json:"to_date,omitempty"`
+	Symbol   string   `json:"symbol,omitempty"`
+	PageNo   int      `json:"page_no,omitempty"`
+	PageSize int      `json:"page_size,omitempty"`
+}
+
+type TradeBookHistoryFilter struct {
+	Exchange []string `json:"exchange_type,omitempty"`
+	Segment  []string `json:"segment_type,omitempty"`
+	Status   []string `json:"status,omitempty"`
+	FromDate string   `json:"from_date,omitempty"`
+	ToDate   string   `json:"to_date,omitempty"`
+	Symbol   string   `json:"symbol,omitempty"`
+	PageNo   int      `json:"page_no,omitempty"`
+	PageSize int      `json:"page_size,omitempty"`
+}

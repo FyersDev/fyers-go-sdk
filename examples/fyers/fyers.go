@@ -177,6 +177,42 @@ func main() {
 // 	}
 // }
 
+// for order history
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+// 	// param := fyersgosdk.OrderBookHistoryFilter{
+// 	// 	Symbol: "NSE:MAZDOCK-EQ",
+// 	// }
+// 	// Pass nil for no filter, or use OrderBookHistoryFilter for filtering.
+// 	// response, err := fyModel.OrderHistory(&param)
+// 	response, err := fyModel.OrderHistory(nil)
+// 	if err != nil {
+// 		fmt.Printf("Error get order history: %v\n", err)
+// 	} else {
+// 		fmt.Println("OrderHistory:", response)
+// 	}
+// }
+
+// for trade history
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+// 	// param := fyersgosdk.TradeBookHistoryFilter{
+// 	// 	Symbol: "NSE:MAZDOCK-EQ",
+// 	// }
+// 	// Pass nil for no filter, or use TradeBookHistoryFilter for filtering.
+// 	// response, err := fyModel.TradeHistory(&param)
+// 	response, err := fyModel.TradeHistory(nil)
+// 	if err != nil {
+// 		fmt.Printf("Error get trade history: %v\n", err)
+// 	} else {
+// 		fmt.Println("TradeHistory:", response)
+// 	}
+// }
+
 // Single Order Placement
 // func main() {
 // 	appId := "AAAAAAAAA-100"

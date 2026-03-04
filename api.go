@@ -45,4 +45,6 @@ const (
 	SmartorderOrderBook      = BaseURL + "/smart-order/orderbook"
 	SmartExitTrigger         = BaseURL + "/flows/tc/se"
 	ActivateSmartExitTrigger = BaseURL + "/flows/tc/se/activate"
+	OrderBookHistoryURL      = BaseURL + "/order-history"
+	TradeBookHistoryURL      = BaseURL + "/trade-history"
 )

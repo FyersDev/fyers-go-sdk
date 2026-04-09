@@ -643,6 +643,7 @@ type OptionChainRequest struct {
 	Symbol      string `json:"symbol"`
 	StrikeCount int    `json:"strikecount,omitempty"`
 	Timestamp   string `json:"timestamp,omitempty"`
+	Greeks      string `json:"greeks,omitempty"`
 }
 
 type OptionChainResponse struct {

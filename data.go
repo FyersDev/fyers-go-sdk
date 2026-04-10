@@ -53,6 +53,7 @@ func (m *FyersModel) GetOptionChain(req OptionChainRequest) (string, error) {
 		"symbol":      {req.Symbol},
 		"strikecount": {strconv.Itoa(req.StrikeCount)},
 		"timestamp":   {req.Timestamp},
+		"greeks":      {req.Greeks},
 	}
 	resp, err := m.httpClient.Do(http.MethodGet, OptionChainURl, params, m.authHeader())
 	if err != nil {

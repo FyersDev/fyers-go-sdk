@@ -11,14 +11,14 @@ import (
 )
 
 // Get Auth Code URL
-func main() {
-	appId := "AAAAAAAAA-100"
-	appSecret := "XY..."
-	redirectUrl := "https://trade.fyers.in/api-login/redirect-uri/index.html"
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	appSecret := "XY..."
+// 	redirectUrl := "https://trade.fyers.in/api-login/redirect-uri/index.html"
 
-	fyClient := fyersgosdk.SetClientData(appId, appSecret, redirectUrl)
-	fmt.Println(fyClient.GetLoginURL())
-}
+// 	fyClient := fyersgosdk.SetClientData(appId, appSecret, redirectUrl)
+// 	fmt.Println(fyClient.GetLoginURL())
+// }
 
 // Generate Access Token
 // func main() {
@@ -1081,3 +1081,22 @@ func main() {
 // func onOrderClose(message fyersws.OrderClose) {
 // 	fmt.Printf("Response: %s\n", message)
 // }
+
+// option chain
+func main() {
+	appId := "GT2V66D5Y4-101"
+	accessToken := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsieDowIl0sImF0X2hhc2giOiJnQUFBQUFCcDF6ZXl3bFdqMXlFd3dfa0lHSzBDcGJBbWFTWFdsY0RNdkpMTkxiX2pmOXhMaGpzVjJCQzZUZDdfSDA1dzZvUnlXRzdqMGdmSEI3S29mRlVsUVJHNGxuU2QwSE5WM1VWRnVkYzRZaFVETkxtb2FsND0iLCJkaXNwbGF5X25hbWUiOiIiLCJvbXMiOiJLMSIsImhzbV9rZXkiOiJjZGE1NGVmMDU1NGYzMmFjOTg2NWViNzMxMGNiMzk1ZmRiYTc1MTY5ZTY3NWNjZjc3OWJjMDM0ZCIsImlzRGRwaUVuYWJsZWQiOiJOIiwiaXNNdGZFbmFibGVkIjoiWSIsImZ5X2lkIjoiRkFGNTA2NzUiLCJhcHBUeXBlIjoxMDEsImV4cCI6MTc3NTc4MTAwMCwiaWF0IjoxNzc1NzEyMTc4LCJpc3MiOiJhcGkuZnllcnMuaW4iLCJuYmYiOjE3NzU3MTIxNzgsInN1YiI6ImFjY2Vzc190b2tlbiJ9.hNoVAtbeD8-i8bRLTDEUjKppMVnQ9ERaPNTafEMAb0U"
+	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+	response, err := fyModel.GetOptionChain(fyersgosdk.OptionChainRequest{
+		Symbol:      "NSE:TCS-EQ",
+		StrikeCount: 1,
+		Timestamp:   "", // optional
+		Greeks:      "1",
+	})
+	if err != nil {
+		fmt.Printf("Error getting option chain: %v", err)
+	} else {
+		fmt.Println("Option chain: ", response)
+	}
+}

@@ -1,6 +1,6 @@
 <a href="https://fyers.in/"><img src="https://assets.fyers.in/images/logo.svg" align="right" /></a>
 
-# Fyers Go SDK : fyers-api-v3 - v1.1.0
+# Fyers Go SDK : fyers-api-v3 - v1.2.0
 
 The official Fyers Go SDK for API-V3 Users [FYERS API](https://fyers.in/products/api/).
 

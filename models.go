@@ -773,3 +773,41 @@ type TradeBookHistoryFilter struct {
 	PageNo   int      `json:"page_no,omitempty"`
 	PageSize int      `json:"page_size,omitempty"`
 }
+
+type ChargesHistoryFilter struct {
+	Exchange   []string `json:"exchange_type,omitempty"`
+	Segment    []string `json:"segment_type,omitempty"`
+	FromDate   string   `json:"from_date,omitempty"`
+	ToDate     string   `json:"to_date,omitempty"`
+	PageNo     int      `json:"page_no,omitempty"`
+	PageSize   int      `json:"page_size,omitempty"`
+	ReportType int      `json:"report_type,omitempty"`
+}
+
+type RealisedProfitFilter struct {
+	Symbol   string   `json:"symbol,omitempty"`
+	FromDate string   `json:"from_date,omitempty"`
+	ToDate   string   `json:"to_date,omitempty"`
+	PageNo   int      `json:"page_no,omitempty"`
+	PageSize int      `json:"page_size,omitempty"`
+	Exchange []string `json:"exchange_type,omitempty"`
+	Segment  []string `json:"segment_type,omitempty"`
+}
+
+type TaxPnLHistoryFilter struct {
+	FinancialYear   int      `json:"fin_year,omitempty"`
+	PageNo          int      `json:"page_no,omitempty"`
+	PageSize        int      `json:"page_size,omitempty"`
+	Segment         []string `json:"segment,omitempty"`
+	TransactionType []string `json:"transaction_type,omitempty"`
+}
+
+type LedgerHistoryFilter struct {
+	FromDate        string   `json:"from_date,omitempty"`
+	ToDate          string   `json:"to_date,omitempty"`
+	PageNo          int      `json:"page_no,omitempty"`
+	PageSize        int      `json:"page_size,omitempty"`
+	TransactionType []string `json:"transaction_type,omitempty"`
+	Exchange        []string `json:"exchange_type,omitempty"`
+	Segment         []string `json:"segment_type,omitempty"`
+}

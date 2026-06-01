@@ -47,4 +47,8 @@ const (
 	ActivateSmartExitTrigger = BaseURL + "/flows/tc/se/activate"
 	OrderBookHistoryURL      = BaseURL + "/order-history"
 	TradeBookHistoryURL      = BaseURL + "/trade-history"
+	ChargesHistoryURL        = BaseURL + "/charges-history"
+	RealisedProfitURL        = BaseURL + "/realised-pnl-history"
+	TaxPnLHistoryURL         = BaseURL + "/tax-pnl-history"
+	LedgerHistoryURL         = BaseURL + "/ledger-history"
 )

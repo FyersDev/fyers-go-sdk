@@ -213,6 +213,71 @@ import (
 // 	}
 // }
 
+// for charges history
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+// 	// param := fyersgosdk.ChargesHistoryFilter{
+// 	// 	PageSize: 1,
+// 	// }
+// 	response, err := fyModel.ChargesHistory(nil)
+// 	if err != nil {
+// 		fmt.Printf("Error get charges history: %v\n", err)
+// 	} else {
+// 		fmt.Println("ChargesHistory:", response)
+// 	}
+// }
+
+// for realised profit
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+// 	param := fyersgosdk.RealisedProfitFilter{
+// 		Symbol: "INF204KC1402",
+// 	}
+// 	response, err := fyModel.RealisedProfit(&param)
+// 	if err != nil {
+// 		fmt.Printf("Error get realised profit: %v\n", err)
+// 	} else {
+// 		fmt.Println("RealisedProfit:", response)
+// 	}
+// }
+
+// for tax pnl history
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+// 	param := fyersgosdk.TaxPnLHistoryFilter{
+// 		FinancialYear: 2025,
+// 	}
+// 	response, err := fyModel.TaxPnLHistory(&param)
+// 	if err != nil {
+// 		fmt.Printf("Error get tax pnl history: %v\n", err)
+// 	} else {
+// 		fmt.Println("TaxPnLHistory:", response)
+// 	}
+// }
+
+// for ledger history
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+// 	param := fyersgosdk.LedgerHistoryFilter{
+// 		FromDate: "2025-01-01",
+// 		ToDate:   "2025-12-31",
+// 	}
+// 	response, err := fyModel.LedgerHistory(&param)
+// 	if err != nil {
+// 		fmt.Printf("Error get ledger history: %v\n", err)
+// 	} else {
+// 		fmt.Println("LedgerHistory:", response)
+// 	}
+// }
+
 // Single Order Placement
 // func main() {
 // 	appId := "AAAAAAAAA-100"

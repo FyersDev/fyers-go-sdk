@@ -559,9 +559,70 @@ type HistoryRequest struct {
 	ContFlag   string `json:"cont_flag,omitempty"`
 }
 
+type ExpiryDatesRequest struct {
+	UnderlyingSymbol string `json:"underlying_symbol"`
+	RangeFrom        string `json:"range_from"`
+	RangeTo          string `json:"range_to"`
+	DateFormat       string `json:"date_format"`
+}
+
+type HistoryUnderlyingSymbolsRequest struct {
+	UnderlyingSymbol string `json:"underlying_symbol"`
+	ExpiryDate       string `json:"expiry_date"`
+}
+
+type FuturesChainRequest struct {
+	Symbol string `json:"symbol"`
+}
+
 type HistoryResponse struct {
 	APIResponse
 	Candles [][]interface{} `json:"candles"`
+}
+
+type ExpiryDatesResponse struct {
+	APIResponse
+	Data ExpiryDatesData `json:"data"`
+}
+
+type ExpiryDatesData struct {
+	Symbol      string       `json:"symbol"`
+	FromDate    string       `json:"from_date"`
+	ToDate      string       `json:"to_date"`
+	ExpiryDates ExpiryBucket `json:"expiry_dates"`
+}
+
+type ExpiryBucket struct {
+	Futures []string `json:"futures"`
+	Options []string `json:"options"`
+}
+
+type HistoryUnderlyingSymbolsResponse struct {
+	APIResponse
+	Data HistoryUnderlyingSymbolsData `json:"data"`
+}
+
+type HistoryUnderlyingSymbolsData struct {
+	Symbol     string       `json:"symbol"`
+	ExpiryDate string       `json:"expiry_date"`
+	Contracts  ExpiryBucket `json:"contracts"`
+}
+
+type FuturesChainResponse struct {
+	APIResponse
+	Data []FuturesChainItem `json:"d"`
+}
+
+type FuturesChainItem struct {
+	Ch         float64 `json:"ch"`
+	Chp        float64 `json:"chp"`
+	Expiry     string  `json:"expiry"`
+	ExpiryDate string  `json:"expiry_date"`
+	FyToken    string  `json:"fyToken"`
+	Lp         float64 `json:"lp"`
+	Oi         int     `json:"oi"`
+	Symbol     string  `json:"symbol"`
+	Volume     int     `json:"volume"`
 }
 
 type StockQuotesResponse struct {

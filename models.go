@@ -811,3 +811,19 @@ type LedgerHistoryFilter struct {
 	Exchange        []string `json:"exchange_type,omitempty"`
 	Segment         []string `json:"segment_type,omitempty"`
 }
+
+type ScreenersQuery struct {
+	Screener string `json:"screener"`
+	Universe string `json:"universe"`
+	Fields   string `json:"fields"`
+	OrderBy  string `json:"order_by"`
+	Order    string `json:"order"`
+}
+
+type ScreenersCandlestick struct {
+	Screener string `json:"screener"`
+}
+
+type ScreenersTechnical struct {
+	Screener string `json:"screener"`
+}

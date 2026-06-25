@@ -25,7 +25,7 @@ import (
 // 	appId := "AAAAAAAAA-100"
 // 	appSecret := "XY..."
 // 	redirectUrl := "https://trade.fyers.in/api-login/redirect-uri/index.html"
-// 	authToken := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBfaWQiOiJNMFI0V1cxUFlVIiwidXVpZCI6IjRkYWU5MjQ0NmY4MDRlMWM5Y2RhNjE5NmU0MmY0MjE0IiwiaXBBZGRyIjoiIiwibm9uY2UiOiIiLCJzY29wZSI6IiIsImRpc3BsYXlfbmFtZSI6IllLMDQzOTEiLCJvbXMiOiJLMSIsImhzbV9rZXkiOiJkNWU1YWY5ZmM0NWMwMzZhY2FkZmE2M2ZhZDc1YzZhMmEwZjc3ZDRmMDFlMWJkMTNlMTc4YWI3YyIsImlzRGRwaUVuYWJsZWQiOiJZIiwiaXNNdGZFbmFibGVkIjoiWSIsImF1ZCI6IltcImQ6MVwiLFwiZDoyXCIsXCJ4OjBcIixcIng6MVwiLFwieDoyXCJdIiwiZXhwIjoxNzcxNDIyMDMwLCJpYXQiOjE3NzEzOTIwMzAsImlzcyI6ImFwaS5sb2dpbi5meWVycy5pbiIsIm5iZiI6MTc3MTM5MjAzMCwic3ViIjoiYXV0aF9jb2RlIn0.rnEMaa8MigGEs_LSwEGoc-y0UbqjVRIwahvVccssMwU"
+// 	authToken := ""
 
 // 		fyClient := fyersgosdk.SetClientData(appId, appSecret, redirectUrl)
 // 		response, err := fyClient.GenerateAccessToken(authToken, fyClient)
@@ -40,7 +40,7 @@ import (
 // 	appId := "AAAAAAAAA-100"
 // 	appSecret := "XY..."
 // 	redirectUrl := "https://trade.fyers.in/api-login/redirect-uri/index.html"
-// 	refreshToken := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiZDoxIiwiZDoyIiwieDowIiwieDoxIiwieDoyIl0sImF0X2hhc2giOiJnQUFBQUFCcGxVNE1xZUpQUFdYNWhWQzcyNkZQVTVXTHpjcFRXMjQ3OGFDdGJMemwybE42TmkzUEZpU0xKMHVDRldPVE9Fc3JIbjVlbWxVdVNiQ2F2UXlySTh0LXozeFdaWFo4MFRXZWFxb0JKeVdtbFFfYVNacz0iLCJkaXNwbGF5X25hbWUiOiIiLCJvbXMiOiJLMSIsImhzbV9rZXkiOiJkNWU1YWY5ZmM0NWMwMzZhY2FkZmE2M2ZhZDc1YzZhMmEwZjc3ZDRmMDFlMWJkMTNlMTc4YWI3YyIsImlzRGRwaUVuYWJsZWQiOiJZIiwiaXNNdGZFbmFibGVkIjoiWSIsImZ5X2lkIjoiWUswNDM5MSIsImFwcFR5cGUiOjEwMCwiZXhwIjoxNzcyNjcwNjAwLCJpYXQiOjE3NzEzOTI1MjQsImlzcyI6ImFwaS5meWVycy5pbiIsIm5iZiI6MTc3MTM5MjUyNCwic3ViIjoicmVmcmVzaF90b2tlbiJ9.ogZNRYM6lWQ4RRpVeOMuzpwmbAK9MLhPB89UBaFtxCY"
+// 	refreshToken := ""
 // 	pin := "0000"
 
 // 	fyClient := fyersgosdk.SetClientData(appId, appSecret, redirectUrl)
@@ -1149,8 +1149,8 @@ import (
 
 // option chain
 func main() {
-	appId := "GT2V66D5Y4-101"
-	accessToken := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsieDowIl0sImF0X2hhc2giOiJnQUFBQUFCcDF6ZXl3bFdqMXlFd3dfa0lHSzBDcGJBbWFTWFdsY0RNdkpMTkxiX2pmOXhMaGpzVjJCQzZUZDdfSDA1dzZvUnlXRzdqMGdmSEI3S29mRlVsUVJHNGxuU2QwSE5WM1VWRnVkYzRZaFVETkxtb2FsND0iLCJkaXNwbGF5X25hbWUiOiIiLCJvbXMiOiJLMSIsImhzbV9rZXkiOiJjZGE1NGVmMDU1NGYzMmFjOTg2NWViNzMxMGNiMzk1ZmRiYTc1MTY5ZTY3NWNjZjc3OWJjMDM0ZCIsImlzRGRwaUVuYWJsZWQiOiJOIiwiaXNNdGZFbmFibGVkIjoiWSIsImZ5X2lkIjoiRkFGNTA2NzUiLCJhcHBUeXBlIjoxMDEsImV4cCI6MTc3NTc4MTAwMCwiaWF0IjoxNzc1NzEyMTc4LCJpc3MiOiJhcGkuZnllcnMuaW4iLCJuYmYiOjE3NzU3MTIxNzgsInN1YiI6ImFjY2Vzc190b2tlbiJ9.hNoVAtbeD8-i8bRLTDEUjKppMVnQ9ERaPNTafEMAb0U"
+	appId := ""
+	accessToken := ""
 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
 
 	response, err := fyModel.GetOptionChain(fyersgosdk.OptionChainRequest{

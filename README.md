@@ -1,6 +1,6 @@
 <a href="https://fyers.in/"><img src="https://assets.fyers.in/images/logo.svg" align="right" /></a>
 
-# Fyers Go SDK : fyers-api-v3 - v1.2.0
+# Fyers Go SDK : fyers-api-v3 - v1.4.0
 
 The official Fyers Go SDK for API-V3 Users [FYERS API](https://fyers.in/products/api/).
 
@@ -309,6 +309,15 @@ All API methods return `(string, error)`; the string is the raw JSON response. U
 | `GetMarketDepth(req MarketDepthRequest) (string, error)` | Market depth (symbol, ohlcv_flag). |
 | `GetOptionChain(req OptionChainRequest) (string, error)` | Options chain. |
 
+### Screeners (FyersModel)
+
+| Method | Description |
+|--------|-------------|
+| `ScreenersConfig() (string, error)` | Screener configuration (available universes, fields, candlestick patterns, technical indicators). |
+| `ScreenersQuery(req *ScreenersQuery) (string, error)` | Custom query screener (`screener`, `universe`, `fields`, `order_by`, `order`). Pass `nil` for no filters. |
+| `ScreenersCandlestick(req *ScreenersCandlestick) (string, error)` | Candlestick pattern screener (`screener`). Pass `nil` for no filters. |
+| `ScreenersTechnical(req *ScreenersTechnical) (string, error)` | Technical indicator screener (`screener`). Pass `nil` for no filters. |
+
 ### Broker (FyersModel)
 
 | Method | Description |
@@ -480,3 +489,10 @@ All runnable examples live in **[examples/fyers/fyers.go](examples/fyers/fyers.g
 - **Market depth** – `GetMarketDepth`
 - **Option Chain** – `GetOptionChain`
 - **Get History** – `GetHistory`
+
+### Screeners
+- **Screeners Config** – `ScreenersConfig`
+- **Screeners Query** – `ScreenersQuery`
+- **Screeners Candlestick** – `ScreenersCandlestick`
+- **Screeners Technical** – `ScreenersTechnical`
+

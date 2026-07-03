@@ -39,7 +39,7 @@ func (m *FyersModel) ScreenersQuery(req *ScreenersQuery) (string, error) {
 	return string(resp.Body), nil
 }
 
-func (m *FyersModel) ScreenersCandlestick(req *ScreenersQuery) (string, error) {
+func (m *FyersModel) ScreenersCandlestick(req *ScreenersCandlestick) (string, error) {
 	params := url.Values{}
 	if req != nil {
 		params.Set("screener", req.Screener)
@@ -56,7 +56,7 @@ func (m *FyersModel) ScreenersCandlestick(req *ScreenersQuery) (string, error) {
 	return string(resp.Body), nil
 }
 
-func (m *FyersModel) ScreenersTechnical(req *ScreenersQuery) (string, error) {
+func (m *FyersModel) ScreenersTechnical(req *ScreenersTechnical) (string, error) {
 	params := url.Values{}
 	if req != nil {
 		params.Set("screener", req.Screener)

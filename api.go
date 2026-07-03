@@ -51,4 +51,8 @@ const (
 	RealisedProfitURL        = BaseURL + "/realised-pnl-history"
 	TaxPnLHistoryURL         = BaseURL + "/tax-pnl-history"
 	LedgerHistoryURL         = BaseURL + "/ledger-history"
+	ScreenersConfigURL       = BaseURL + "/screeners/config"
+	ScreenersQueryURL        = BaseURL + "/screeners/query"
+	ScreenersCandlestickURL  = BaseURL + "/screeners/candlestick"
+	ScreenersTechnicalURL    = BaseURL + "/screeners/technical"
 )

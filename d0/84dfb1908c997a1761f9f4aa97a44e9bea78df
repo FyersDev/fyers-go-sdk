@@ -1,0 +1,30 @@
+README.md
+  s_6dc5b43fc4957b::t_1620bb02308dae 312-320
+  s_6dc5b43fc4957b::t_ee5844bc805941 493-498
+  h_e5cd7b20a98a26 3,492
+  s_6dc5b43fc4957b::t_383cd2dbcbf271 491
+screeners.go
+  s_6dc5b43fc4957b::t_3277e95c91825d 59
+  s_6dc5b43fc4957b::t_2a7a9a2a775dae 42
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "d084dfb1908c997a1761f9f4aa97a44e9bea78df",
+  "prompts": {},
+  "humans": {
+    "h_e5cd7b20a98a26": {
+      "author": "kishore-fyers <kishorekumar@fyers.in>"
+    }
+  },
+  "sessions": {
+    "s_6dc5b43fc4957b": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "1df6ed4f-f19d-4622-81d6-085f4cc33ced",
+        "model": "default"
+      },
+      "human_author": "kishore-fyers <kishorekumar@fyers.in>"
+    }
+  }
+}

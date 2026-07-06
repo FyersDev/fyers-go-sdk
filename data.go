@@ -25,7 +25,7 @@ func (m *FyersModel) GetHistory(historyRequest HistoryRequest) (string, error) {
 
 func (m *FyersModel) GetExpiryDates(req ExpiryDatesRequest) (string, error) {
 	params := url.Values{}
-	params.Set("underlying_symbol", req.UnderlyingSymbol)
+	params.Set("symbol", req.UnderlyingSymbol)
 	params.Set("range_from", req.RangeFrom)
 	params.Set("range_to", req.RangeTo)
 	params.Set("date_format", req.DateFormat)
@@ -39,7 +39,7 @@ func (m *FyersModel) GetExpiryDates(req ExpiryDatesRequest) (string, error) {
 
 func (m *FyersModel) GetHistoryUnderlyingSymbols(req HistoryUnderlyingSymbolsRequest) (string, error) {
 	params := url.Values{}
-	params.Set("underlying_symbol", req.UnderlyingSymbol)
+	params.Set("symbol", req.UnderlyingSymbol)
 	params.Set("expiry_date", req.ExpiryDate)
 
 	resp, err := m.httpClient.Do(http.MethodGet, HistoryUnderlyingSymbolsURL, params, m.authHeader())
@@ -54,6 +54,22 @@ func (m *FyersModel) GetFuturesChain(req FuturesChainRequest) (string, error) {
 	params.Set("symbol", req.Symbol)
 
 	resp, err := m.httpClient.Do(http.MethodGet, FuturesChainURL, params, m.authHeader())
+	if err != nil {
+		return "", err
+	}
+	return string(resp.Body), nil
+}
+
+func (m *FyersModel) GetFNOHistoricalData(req HistoryRequest) (string, error) {
+	params := url.Values{}
+	params.Set("symbol", req.Symbol)
+	params.Set("resolution", req.Resolution)
+	params.Set("date_format", req.DateFormat)
+	params.Set("range_from", req.RangeFrom)
+	params.Set("range_to", req.RangeTo)
+	params.Set("cont_flag", req.ContFlag)
+
+	resp, err := m.httpClient.Do(http.MethodGet, FNOHistoricalDataURL, params, m.authHeader())
 	if err != nil {
 		return "", err
 	}

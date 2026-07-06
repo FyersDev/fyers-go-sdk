@@ -51,7 +51,8 @@ const (
 	RealisedProfitURL           = BaseURL + "/realised-pnl-history"
 	TaxPnLHistoryURL            = BaseURL + "/tax-pnl-history"
 	LedgerHistoryURL            = BaseURL + "/ledger-history"
-	ExpiryDatesURL              = BaseURL + "/history/expiry-dates"
-	HistoryUnderlyingSymbolsURL = BaseURL + "/history/underlying-symbols"
+	ExpiryDatesURL              = BaseDataURL + "/history/fno/expired/expiry-dates"
+	HistoryUnderlyingSymbolsURL = BaseDataURL + "/history/fno/expired/underlying-symbols"
 	FuturesChainURL             = BaseURL + "/futures-chain"
+	FNOHistoricalDataURL        = BaseDataURL + "/history/fno/expired/historical-data"
 )

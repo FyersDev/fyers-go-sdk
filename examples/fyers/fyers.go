@@ -3,8 +3,10 @@ package main
 // "os"
 // "os/signal"
 // "syscall"
+// "os"
+// "os/signal"
+// "syscall"
 
-// fyersgosdk "github.com/FyersDev/fyers-go-sdk"
 // fyersws "github.com/FyersDev/fyers-go-sdk/websocket"
 
 // Get Auth Code URL
@@ -1208,20 +1210,116 @@ package main
 
 // option chain
 // func main() {
+// 	appId := "GT2V66D5Y4-101"
+// 	accessToken := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsieDowIl0sImF0X2hhc2giOiJnQUFBQUFCcDF6ZXl3bFdqMXlFd3dfa0lHSzBDcGJBbWFTWFdsY0RNdkpMTkxiX2pmOXhMaGpzVjJCQzZUZDdfSDA1dzZvUnlXRzdqMGdmSEI3S29mRlVsUVJHNGxuU2QwSE5WM1VWRnVkYzRZaFVETkxtb2FsND0iLCJkaXNwbGF5X25hbWUiOiIiLCJvbXMiOiJLMSIsImhzbV9rZXkiOiJjZGE1NGVmMDU1NGYzMmFjOTg2NWViNzMxMGNiMzk1ZmRiYTc1MTY5ZTY3NWNjZjc3OWJjMDM0ZCIsImlzRGRwaUVuYWJsZWQiOiJOIiwiaXNNdGZFbmFibGVkIjoiWSIsImZ5X2lkIjoiRkFGNTA2NzUiLCJhcHBUeXBlIjoxMDEsImV4cCI6MTc3NTc4MTAwMCwiaWF0IjoxNzc1NzEyMTc4LCJpc3MiOiJhcGkuZnllcnMuaW4iLCJuYmYiOjE3NzU3MTIxNzgsInN1YiI6ImFjY2Vzc190b2tlbiJ9.hNoVAtbeD8-i8bRLTDEUjKppMVnQ9ERaPNTafEMAb0U"
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// // 	response, err := fyModel.GetOptionChain(fyersgosdk.OptionChainRequest{
+// // 		Symbol:      "NSE:TCS-EQ",
+// // 		StrikeCount: 1,
+// // 		Timestamp:   "", // optional
+// // 		Greeks:      "1",
+// // 	})
+// // 	if err != nil {
+// // 		fmt.Printf("Error getting option chain: %v", err)
+// // 	} else {
+// // 		fmt.Println("Option chain: ", response)
+// // 	}
+// }
+
+// Expiry Dates (Expired FNO)
+// func main() {
+// 	appId := "BQ6KVNTLF1-200"
+// 	accessToken := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiZDoxIiwiZDoyIiwieDowIiwieDoxIiwieDoyIl0sImF0X2hhc2giOiJnQUFBQUFCcVMwaG9hTnVkc3kwZ240TG5PS05ZZ3VwR1Q1VTFxZHFWbGxaVXp2NzY2OHZXMURDOXM1c25KSnlpcmVrazVCa3QxTGJzczdhd0R3VF9Ld2pNWktucHRsUFA5TDVpaE1GY3dDT0d6MFRSUF96cmprdz0iLCJkaXNwbGF5X25hbWUiOiIiLCJvbXMiOiJLMSIsImhzbV9rZXkiOiI3ZmRkMzAyYjhiZjQwNWMwMGRhNjE2ODEzNTM2OGM0NmNjZDYyMTgyZGU1NTIyN2FmYjc0NjZmMCIsImlzRGRwaUVuYWJsZWQiOiJOIiwiaXNNdGZFbmFibGVkIjoiTiIsImZ5X2lkIjoiWFIyNDc2MSIsImFwcFR5cGUiOjIwMCwiZXhwIjoxNzgzMzg0MjAwLCJpYXQiOjE3ODMzMTg2MzIsImlzcyI6ImFwaS5meWVycy5jby5pbiIsIm5iZiI6MTc4MzMxODYzMiwic3ViIjoiYWNjZXNzX3Rva2VuIn0.AwLllDIS9PiRNjiBpxSIpX3I1jCmL8Eqigx8qqYrcbk"
+
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.GetExpiryDates(fyersgosdk.ExpiryDatesRequest{
+// 		UnderlyingSymbol: "NSE:NIFTY50-INDEX",
+// 		RangeFrom:        "2024-01-01",
+// 		RangeTo:          "2024-12-31",
+// 		DateFormat:       "1",
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error getting expiry dates: %v", err)
+// 	} else {
+// 		fmt.Println("Expiry dates: ", response)
+// 	}
+// }
+
+// Underlying Symbols (Expired FNO)
+// func main() {
+// 	appId := "BQ6KVNTLF1-200"
+// 	accessToken := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiZDoxIiwiZDoyIiwieDowIiwieDoxIiwieDoyIl0sImF0X2hhc2giOiJnQUFBQUFCcVMwaG9hTnVkc3kwZ240TG5PS05ZZ3VwR1Q1VTFxZHFWbGxaVXp2NzY2OHZXMURDOXM1c25KSnlpcmVrazVCa3QxTGJzczdhd0R3VF9Ld2pNWktucHRsUFA5TDVpaE1GY3dDT0d6MFRSUF96cmprdz0iLCJkaXNwbGF5X25hbWUiOiIiLCJvbXMiOiJLMSIsImhzbV9rZXkiOiI3ZmRkMzAyYjhiZjQwNWMwMGRhNjE2ODEzNTM2OGM0NmNjZDYyMTgyZGU1NTIyN2FmYjc0NjZmMCIsImlzRGRwaUVuYWJsZWQiOiJOIiwiaXNNdGZFbmFibGVkIjoiTiIsImZ5X2lkIjoiWFIyNDc2MSIsImFwcFR5cGUiOjIwMCwiZXhwIjoxNzgzMzg0MjAwLCJpYXQiOjE3ODMzMTg2MzIsImlzcyI6ImFwaS5meWVycy5jby5pbiIsIm5iZiI6MTc4MzMxODYzMiwic3ViIjoiYWNjZXNzX3Rva2VuIn0.AwLllDIS9PiRNjiBpxSIpX3I1jCmL8Eqigx8qqYrcbk"
+
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.GetHistoryUnderlyingSymbols(fyersgosdk.HistoryUnderlyingSymbolsRequest{
+// 		UnderlyingSymbol: "NSE:NIFTY50-INDEX",
+// 		ExpiryDate:       "2024-11-28",
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error getting underlying symbols: %v", err)
+// 	} else {
+// 		fmt.Println("Underlying symbols: ", response)
+// 	}
+// }
+
+// Futures Chain
+// func main() {
+// 	appId := "BQ6KVNTLF1-200"
+// 	accessToken := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiZDoxIiwiZDoyIiwieDowIiwieDoxIiwieDoyIl0sImF0X2hhc2giOiJnQUFBQUFCcVMwaG9hTnVkc3kwZ240TG5PS05ZZ3VwR1Q1VTFxZHFWbGxaVXp2NzY2OHZXMURDOXM1c25KSnlpcmVrazVCa3QxTGJzczdhd0R3VF9Ld2pNWktucHRsUFA5TDVpaE1GY3dDT0d6MFRSUF96cmprdz0iLCJkaXNwbGF5X25hbWUiOiIiLCJvbXMiOiJLMSIsImhzbV9rZXkiOiI3ZmRkMzAyYjhiZjQwNWMwMGRhNjE2ODEzNTM2OGM0NmNjZDYyMTgyZGU1NTIyN2FmYjc0NjZmMCIsImlzRGRwaUVuYWJsZWQiOiJOIiwiaXNNdGZFbmFibGVkIjoiTiIsImZ5X2lkIjoiWFIyNDc2MSIsImFwcFR5cGUiOjIwMCwiZXhwIjoxNzgzMzg0MjAwLCJpYXQiOjE3ODMzMTg2MzIsImlzcyI6ImFwaS5meWVycy5jby5pbiIsIm5iZiI6MTc4MzMxODYzMiwic3ViIjoiYWNjZXNzX3Rva2VuIn0.AwLllDIS9PiRNjiBpxSIpX3I1jCmL8Eqigx8qqYrcbk"
+
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.GetFuturesChain(fyersgosdk.FuturesChainRequest{
+// 		Symbol: "NSE:NIFTY50-INDEX",
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error getting futures chain: %v", err)
+// 	} else {
+// 		fmt.Println("Futures chain: ", response)
+// 	}
+// }
+
+// FNO Historical Data (Expired)
+// func main() {
+// 	appId := "BQ6KVNTLF1-200"
+// 	accessToken := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiZDoxIiwiZDoyIiwieDowIiwieDoxIiwieDoyIl0sImF0X2hhc2giOiJnQUFBQUFCcVMwaG9hTnVkc3kwZ240TG5PS05ZZ3VwR1Q1VTFxZHFWbGxaVXp2NzY2OHZXMURDOXM1c25KSnlpcmVrazVCa3QxTGJzczdhd0R3VF9Ld2pNWktucHRsUFA5TDVpaE1GY3dDT0d6MFRSUF96cmprdz0iLCJkaXNwbGF5X25hbWUiOiIiLCJvbXMiOiJLMSIsImhzbV9rZXkiOiI3ZmRkMzAyYjhiZjQwNWMwMGRhNjE2ODEzNTM2OGM0NmNjZDYyMTgyZGU1NTIyN2FmYjc0NjZmMCIsImlzRGRwaUVuYWJsZWQiOiJOIiwiaXNNdGZFbmFibGVkIjoiTiIsImZ5X2lkIjoiWFIyNDc2MSIsImFwcFR5cGUiOjIwMCwiZXhwIjoxNzgzMzg0MjAwLCJpYXQiOjE3ODMzMTg2MzIsImlzcyI6ImFwaS5meWVycy5jby5pbiIsIm5iZiI6MTc4MzMxODYzMiwic3ViIjoiYWNjZXNzX3Rva2VuIn0.AwLllDIS9PiRNjiBpxSIpX3I1jCmL8Eqigx8qqYrcbk"
+
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.GetFNOHistoricalData(fyersgosdk.HistoryRequest{
+// 		Symbol:     "NSE:NIFTY24NOV22500CE",
+// 		Resolution: "5",
+// 		DateFormat: "1",
+// 		RangeFrom:  "2024-11-01",
+// 		RangeTo:    "2024-11-28",
+// 		ContFlag:   "1",
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error getting FNO historical data: %v", err)
+// 	} else {
+// 		fmt.Println("FNO historical data: ", response)
+// 	}
+// // }
+
+// Attach TP/SL legs to an open position
+// func main() {
 // 	appId := "AAAAAAAAA-100"
 // 	accessToken := "eyjb...."
 // 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
 
-// 	response, err := fyModel.GetOptionChain(fyersgosdk.OptionChainRequest{
-// 		Symbol:      "NSE:TCS-EQ",
-// 		StrikeCount: 1,
-// 		Timestamp:   "", // optional
-// 		Greeks:      "1",
+// 	response, err := fyModel.AttachPositionLegs(fyersgosdk.AttachPositionLegsRequest{
+// 		PositionID: "NSE:IDEA-EQ-INTRADAY",
+// 		TakeProfit: 1,
+// 		StopLoss:   2,
+// 		LegType:    fyersgosdk.LegTypePoints,
 // 	})
 // 	if err != nil {
-// 		fmt.Printf("Error getting option chain: %v", err)
+// 		fmt.Printf("Error attach position legs: %v", err)
 // 	} else {
-// 		fmt.Println("Option chain: ", response)
+// 		fmt.Println("Attach position legs: ", response)
 // 	}
 // }
 
@@ -1242,4 +1340,3 @@ package main
 // 	} else {
 // 		fmt.Println("Attach position legs: ", response)
 // 	}
-// }

@@ -148,6 +148,9 @@ type OrderBookItem struct {
 	OrderNumStatus    string  `json:"orderNumStatus"`
 	DisclosedQty      int     `json:"disclosedQty"`
 	OrderTag          string  `json:"orderTag"`
+	TakeProfit        float64 `json:"takeProfit,omitempty"`
+	StopLoss          float64 `json:"stopLoss,omitempty"`
+	LegType           int     `json:"legType,omitempty"`
 }
 
 type Position struct {
@@ -186,6 +189,9 @@ type NetPosition struct {
 	DayBuyQty        int     `json:"dayBuyQty"`
 	DaySellQty       int     `json:"daySellQty"`
 	Exchange         int     `json:"exchange"`
+	TakeProfit       float64 `json:"takeProfit,omitempty"`
+	StopLoss         float64 `json:"stopLoss,omitempty"`
+	LegType          int     `json:"legType,omitempty"`
 }
 
 type OverallPosition struct {
@@ -232,10 +238,16 @@ type OrderRequest struct {
 	Validity     string  `json:"validity"`
 	DisclosedQty int     `json:"disclosedQty"`
 	OfflineOrder bool    `json:"offlineOrder"`
-	StopLoss     float64 `json:"stopLoss"`
-	TakeProfit   float64 `json:"takeProfit"`
-	OrderTag     string  `json:"orderTag"`
-	IsSliceOrder bool    `json:"isSliceOrder,omitempty"`
+	// TakeProfit is optional. Offset (points or percent), not an absolute price. Minimum 0.0025.
+	// Omit to place without a TP leg. Use FloatOffset(v) to set.
+	TakeProfit *FloatValue `json:"takeProfit,omitempty"`
+	// StopLoss is optional. Offset (points or percent), not an absolute price. Minimum 0.0025.
+	// Omit to place without an SL leg. Use FloatOffset(v) to set.
+	StopLoss *FloatValue `json:"stopLoss,omitempty"`
+	// LegType is optional. 1 = points (default), 2 = percent. Used when TakeProfit and/or StopLoss are set.
+	LegType      int    `json:"legType,omitempty"`
+	OrderTag     string `json:"orderTag"`
+	IsSliceOrder bool   `json:"isSliceOrder,omitempty"`
 }
 
 type OrderResponse struct {
@@ -500,6 +512,25 @@ type ModifyOrderRequest struct {
 	LimitPrice   float64 `json:"limitPrice"`
 	StopPrice    float64 `json:"stopPrice"`
 	DisclosedQty int     `json:"disclosedQty,omitempty"`
+	// TakeProfit is optional. > 0 updates/creates TP; NullOffset()/FloatOffset(0) removes; omit keeps existing.
+	TakeProfit *FloatValue `json:"takeProfit,omitempty"`
+	// StopLoss is optional. > 0 updates/creates SL; NullOffset()/FloatOffset(0) removes; omit keeps existing.
+	StopLoss *FloatValue `json:"stopLoss,omitempty"`
+	// LegType is optional and read-only once legs exist; cannot change legType of active TP/SL legs.
+	LegType int `json:"legType,omitempty"`
+}
+
+// AttachPositionLegsRequest attaches or updates TP/SL legs on an open position (PATCH /positions).
+// TakeProfit and StopLoss are both optional — set either, both, or neither (with NullOffset to remove).
+type AttachPositionLegsRequest struct {
+	PositionID string `json:"positionId"`
+	// TakeProfit is optional. Use FloatOffset(v) to set/update, NullOffset() to remove, omit to keep existing.
+	TakeProfit *FloatValue `json:"takeProfit,omitempty"`
+	// StopLoss is optional. Use FloatOffset(v) to set/update, NullOffset() to remove, omit to keep existing.
+	StopLoss *FloatValue `json:"stopLoss,omitempty"`
+	// LegType is optional. 1 = points (default), 2 = percent.
+	LegType int `json:"legType,omitempty"`
+	Qty     int `json:"qty,omitempty"`
 }
 
 type ModifyMultiOrderItem struct {

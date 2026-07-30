@@ -289,15 +289,39 @@ import (
 // 		Qty:          1,
 // 		Type:         1,
 // 		Side:         1,
-// 		ProductType:  "CNC",
+// 		ProductType:  fyersgosdk.ProductCNC,
 // 		LimitPrice:   100,
 // 		StopPrice:    0,
 // 		Validity:     "DAY",
 // 		DisclosedQty: 1,
 // 		OfflineOrder: false,
-// 		StopLoss:     0,
-// 		TakeProfit:   0,
 // 		OrderTag:     "TESTEST",
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error single order action: %v", err)
+// 	} else {
+// 		fmt.Println("single order action: ", response)
+// 	}
+// }
+
+// Single Order Placement with TP/SL offsets (replaces deprecated BO/CO)
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+// 	response, err := fyModel.SingleOrderAction(fyersgosdk.OrderRequest{
+// 		Symbol:       "NSE:SBIN-EQ",
+// 		Qty:          10,
+// 		Type:         1,
+// 		Side:         1,
+// 		ProductType:  fyersgosdk.ProductIntraday,
+// 		LimitPrice:   500.0,
+// 		Validity:     "DAY",
+// 		TakeProfit:   fyersgosdk.FloatOffset(10.5), // optional
+// 		StopLoss:     fyersgosdk.FloatOffset(5.0),  // optional
+// 		LegType:      fyersgosdk.LegTypePoints,
+// 		OrderTag:     "TPSL",
 // 	})
 // 	if err != nil {
 // 		fmt.Printf("Error single order action: %v", err)
@@ -313,9 +337,9 @@ import (
 
 // 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
 // 	response, err := fyModel.MultiOrderAction([]fyersgosdk.OrderRequest{
-// 		{Symbol: "NSE:ITC-EQ", Qty: 1, Type: 1, Side: 1, ProductType: "CNC", LimitPrice: 165, StopPrice: 0, DisclosedQty: 0, Validity: "DAY", OfflineOrder: true, StopLoss: 0, TakeProfit: 0, OrderTag: "tag1"},
-// 		{Symbol: "NSE:ITC-EQ", Qty: 1, Type: 1, Side: 1, ProductType: "CNC", LimitPrice: 165, StopPrice: 0, DisclosedQty: 0, Validity: "DAY", OfflineOrder: true, StopLoss: 0, TakeProfit: 0, OrderTag: "tag1"},
-// 		{Symbol: "NSE:ITC-EQ", Qty: 1, Type: 1, Side: 1, ProductType: "CNC", LimitPrice: 165, StopPrice: 0, DisclosedQty: 0, Validity: "DAY", OfflineOrder: true, StopLoss: 0, TakeProfit: 0, OrderTag: "tag1"},
+// 		{Symbol: "NSE:ITC-EQ", Qty: 1, Type: 1, Side: 1, ProductType: fyersgosdk.ProductCNC, LimitPrice: 165, StopPrice: 0, DisclosedQty: 0, Validity: "DAY", OfflineOrder: true, OrderTag: "tag1"},
+// 		{Symbol: "NSE:ITC-EQ", Qty: 1, Type: 1, Side: 1, ProductType: fyersgosdk.ProductCNC, LimitPrice: 165, StopPrice: 0, DisclosedQty: 0, Validity: "DAY", OfflineOrder: true, OrderTag: "tag1"},
+// 		{Symbol: "NSE:ITC-EQ", Qty: 1, Type: 1, Side: 1, ProductType: fyersgosdk.ProductCNC, LimitPrice: 165, StopPrice: 0, DisclosedQty: 0, Validity: "DAY", OfflineOrder: true, OrderTag: "tag1"},
 // 	})
 // 	if err != nil {
 // 		fmt.Printf("Error multi order action: %v", err)
@@ -502,6 +526,24 @@ import (
 // 	}
 // }
 
+// Modify Order TP/SL (update takeProfit, remove stopLoss)
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+// 	response, err := fyModel.ModifyOrder(fyersgosdk.ModifyOrderRequest{
+// 		Id:         "23072800012345",
+// 		TakeProfit: fyersgosdk.FloatOffset(15.0),
+// 		StopLoss:   fyersgosdk.NullOffset(),
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error modify order TP/SL: %v", err)
+// 	} else {
+// 		fmt.Println("modify order TP/SL: ", response)
+// 	}
+// }
+
 // Modify Multi Orders
 // func main() {
 // 	appId := "AAAAAAAAA-100"
@@ -631,6 +673,25 @@ import (
 // 		fmt.Printf("Error convert position: %v", err)
 // 	} else {
 // 		fmt.Println("Convert position: ", response)
+// 	}
+// }
+
+// Attach TP/SL legs to an open position
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+// 	response, err := fyModel.AttachPositionLegs(fyersgosdk.AttachPositionLegsRequest{
+// 		PositionID: "NSE:SBIN-EQ-INTRADAY",
+// 		TakeProfit: fyersgosdk.FloatOffset(2.5),
+// 		StopLoss:   fyersgosdk.FloatOffset(1.5),
+// 		LegType:    fyersgosdk.LegTypePercent,
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error attach position legs: %v", err)
+// 	} else {
+// 		fmt.Println("Attach position legs: ", response)
 // 	}
 // }
 

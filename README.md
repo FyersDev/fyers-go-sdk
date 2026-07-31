@@ -157,8 +157,8 @@ func main() {
         ProductType: fyersgosdk.ProductIntraday,
         LimitPrice:  500.0,
         Validity:    "DAY",
-        TakeProfit:  fyersgosdk.FloatOffset(10.5), // optional
-        StopLoss:    fyersgosdk.FloatOffset(5.0),  // optional — omit either field if not needed
+        TakeProfit:  10.5, // optional float
+        StopLoss:    5.0,  // optional float — omit either field (or leave 0) if not needed
         LegType:     fyersgosdk.LegTypePoints, // 1 = points, 2 = percent
     })
     if err != nil {
@@ -169,9 +169,9 @@ func main() {
 
     // Update TP and remove SL on an open order
     mod, err := fyModel.ModifyOrder(fyersgosdk.ModifyOrderRequest{
-        Id:         "23072800012345",
-        TakeProfit: fyersgosdk.FloatOffset(15.0),
-        StopLoss:   fyersgosdk.NullOffset(), // JSON null removes the SL leg
+        Id:            "23072800012345",
+        TakeProfit:    15.0,
+        ClearStopLoss: true, // sends "stopLoss": null
     })
     if err != nil {
         fmt.Println("Error:", err)
@@ -182,8 +182,8 @@ func main() {
     // Attach TP/SL to an open position
     attach, err := fyModel.AttachPositionLegs(fyersgosdk.AttachPositionLegsRequest{
         PositionID: "NSE:SBIN-EQ-INTRADAY",
-        TakeProfit: fyersgosdk.FloatOffset(2.5),
-        StopLoss:   fyersgosdk.FloatOffset(1.5),
+        TakeProfit: 2.5,
+        StopLoss:   1.5,
         LegType:    fyersgosdk.LegTypePercent,
     })
     if err != nil {
@@ -504,7 +504,7 @@ All runnable examples live in **[examples/fyers/fyers.go](examples/fyers/fyers.g
 - **Single Order Placement** – `SingleOrderAction` (supports `takeProfit` / `stopLoss` / `legType` offsets)
 - **Multi Order Placement** – `MultiOrderAction`
 - **MultiLeg Order** – `MultiLegOrderAction`
-- **Modify Orders** – `ModifyOrder` (update/clear TP/SL via `FloatOffset` / `NullOffset`)
+- **Modify Orders** – `ModifyOrder` (update TP/SL via float fields; clear with `ClearTakeProfit` / `ClearStopLoss`)
 - **Modify Multi Orders** – `ModifyMutliOrder`
 - **Cancel Order** – `CancelOrder`
 - **Multi Cancel Order** – `CancelMutliOrder`

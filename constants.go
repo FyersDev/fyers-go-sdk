@@ -23,9 +23,3 @@ const (
 	// LegTypePercent measures takeProfit/stopLoss as a percentage of entry price.
 	LegTypePercent = 2
 )
-
-const (
-	minTPSLOffset      = 0.0025
-	maxTPSLPercent     = 100.0
-	deprecatedBOCOCode = -1800
-)

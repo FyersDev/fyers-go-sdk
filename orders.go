@@ -7,9 +7,6 @@ import (
 )
 
 func (m *FyersModel) SingleOrderAction(orderRequest OrderRequest) (string, error) {
-	if err := orderRequest.validateTPSL(); err != nil {
-		return "", err
-	}
 	body, err := json.Marshal(orderRequest)
 	if err != nil {
 		return "", fmt.Errorf("marshal order request: %w", err)
@@ -24,11 +21,6 @@ func (m *FyersModel) SingleOrderAction(orderRequest OrderRequest) (string, error
 }
 
 func (m *FyersModel) MultiOrderAction(orderRequests []OrderRequest) (string, error) {
-	for i, req := range orderRequests {
-		if err := req.validateTPSL(); err != nil {
-			return "", fmt.Errorf("order[%d]: %w", i, err)
-		}
-	}
 	body, err := json.Marshal(orderRequests)
 	if err != nil {
 		return "", fmt.Errorf("marshal order requests: %w", err)

@@ -1,24 +1,6 @@
 package fyersgosdk
 
-import (
-	"encoding/json"
-	"fmt"
-)
-
-func validateLegType(legType int) error {
-	if legType != 0 && legType != LegTypePoints && legType != LegTypePercent {
-		return fmt.Errorf("legType must be 1 (points) or 2 (percent)")
-	}
-	return nil
-}
-
-func (r OrderRequest) validateTPSL() error {
-	return validateLegType(r.LegType)
-}
-
-func (r ModifyOrderRequest) validateTPSL() error {
-	return validateLegType(r.LegType)
-}
+import "encoding/json"
 
 // MarshalJSON emits takeProfit/stopLoss as null when Clear* flags are set.
 func (r ModifyOrderRequest) MarshalJSON() ([]byte, error) {
@@ -41,13 +23,6 @@ func (r ModifyOrderRequest) MarshalJSON() ([]byte, error) {
 		m["stopLoss"] = nil
 	}
 	return json.Marshal(m)
-}
-
-func (r AttachPositionLegsRequest) validateTPSL() error {
-	if r.PositionID == "" {
-		return fmt.Errorf("positionId is required")
-	}
-	return validateLegType(r.LegType)
 }
 
 // MarshalJSON emits takeProfit/stopLoss as null when Clear* flags are set.

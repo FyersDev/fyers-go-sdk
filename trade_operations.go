@@ -7,9 +7,6 @@ import (
 )
 
 func (m *FyersModel) ModifyOrder(orderRequest ModifyOrderRequest) (string, error) {
-	if err := orderRequest.validateTPSL(); err != nil {
-		return "", err
-	}
 	body, err := json.Marshal(orderRequest)
 	if err != nil {
 		return "", fmt.Errorf("marshal order request: %w", err)
@@ -140,11 +137,8 @@ func (m *FyersModel) ConvertPosition(req ConvertPositionRequest) (string, error)
 }
 
 // AttachPositionLegs attaches or updates TP/SL legs on an open position (PATCH /positions).
-// Use NullOffset() to remove a leg; omit TakeProfit/StopLoss to leave the existing leg unchanged.
+// Use ClearTakeProfit/ClearStopLoss to remove a leg; omit TakeProfit/StopLoss (leave 0) to keep existing.
 func (m *FyersModel) AttachPositionLegs(req AttachPositionLegsRequest) (string, error) {
-	if err := req.validateTPSL(); err != nil {
-		return "", err
-	}
 	body, err := json.Marshal(req)
 	if err != nil {
 		return "", fmt.Errorf("marshal attach position legs request: %w", err)

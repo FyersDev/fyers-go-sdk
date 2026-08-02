@@ -11,7 +11,9 @@ func (m *FyersModel) ModifyOrder(orderRequest ModifyOrderRequest) (string, error
 	if err != nil {
 		return "", fmt.Errorf("marshal order request: %w", err)
 	}
-	resp, err := m.httpClient.DoRaw(http.MethodPatch, SingleOrderActionURL, body, m.authHeader())
+	headers := m.authHeader()
+	headers.Set("Content-Type", "application/json")
+	resp, err := m.httpClient.DoRaw(http.MethodPatch, SingleOrderActionURL, body, headers)
 	if err != nil {
 		return "", err
 	}
@@ -128,6 +130,22 @@ func (m *FyersModel) ConvertPosition(req ConvertPositionRequest) (string, error)
 	headers := m.authHeader()
 	headers.Set("Content-Type", "application/json")
 	resp, err := m.httpClient.DoRaw(http.MethodPost, PositionURL, body, headers)
+	if err != nil {
+		return "", err
+	}
+	return string(resp.Body), nil
+}
+
+// AttachPositionLegs attaches or updates TP/SL legs on an open position (PATCH /positions).
+// Use ClearTakeProfit/ClearStopLoss to remove a leg; omit TakeProfit/StopLoss (leave 0) to keep existing.
+func (m *FyersModel) AttachPositionLegs(req AttachPositionLegsRequest) (string, error) {
+	body, err := json.Marshal(req)
+	if err != nil {
+		return "", fmt.Errorf("marshal attach position legs request: %w", err)
+	}
+	headers := m.authHeader()
+	headers.Set("Content-Type", "application/json")
+	resp, err := m.httpClient.DoRaw(http.MethodPatch, PositionURL, body, headers)
 	if err != nil {
 		return "", err
 	}

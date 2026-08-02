@@ -1,14 +1,11 @@
 package main
 
-import (
-	"fmt"
-	// "os"
-	// "os/signal"
-	// "syscall"
+// "os"
+// "os/signal"
+// "syscall"
 
-	fyersgosdk "github.com/FyersDev/fyers-go-sdk"
-	// fyersws "github.com/FyersDev/fyers-go-sdk/websocket"
-)
+// fyersgosdk "github.com/FyersDev/fyers-go-sdk"
+// fyersws "github.com/FyersDev/fyers-go-sdk/websocket"
 
 // Get Auth Code URL
 // func main() {
@@ -25,7 +22,7 @@ import (
 // 	appId := "AAAAAAAAA-100"
 // 	appSecret := "XY..."
 // 	redirectUrl := "https://trade.fyers.in/api-login/redirect-uri/index.html"
-// 	authToken := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBfaWQiOiJNMFI0V1cxUFlVIiwidXVpZCI6IjRkYWU5MjQ0NmY4MDRlMWM5Y2RhNjE5NmU0MmY0MjE0IiwiaXBBZGRyIjoiIiwibm9uY2UiOiIiLCJzY29wZSI6IiIsImRpc3BsYXlfbmFtZSI6IllLMDQzOTEiLCJvbXMiOiJLMSIsImhzbV9rZXkiOiJkNWU1YWY5ZmM0NWMwMzZhY2FkZmE2M2ZhZDc1YzZhMmEwZjc3ZDRmMDFlMWJkMTNlMTc4YWI3YyIsImlzRGRwaUVuYWJsZWQiOiJZIiwiaXNNdGZFbmFibGVkIjoiWSIsImF1ZCI6IltcImQ6MVwiLFwiZDoyXCIsXCJ4OjBcIixcIng6MVwiLFwieDoyXCJdIiwiZXhwIjoxNzcxNDIyMDMwLCJpYXQiOjE3NzEzOTIwMzAsImlzcyI6ImFwaS5sb2dpbi5meWVycy5pbiIsIm5iZiI6MTc3MTM5MjAzMCwic3ViIjoiYXV0aF9jb2RlIn0.rnEMaa8MigGEs_LSwEGoc-y0UbqjVRIwahvVccssMwU"
+// 	authToken := "eyjb...."
 
 // 		fyClient := fyersgosdk.SetClientData(appId, appSecret, redirectUrl)
 // 		response, err := fyClient.GenerateAccessToken(authToken, fyClient)
@@ -40,7 +37,7 @@ import (
 // 	appId := "AAAAAAAAA-100"
 // 	appSecret := "XY..."
 // 	redirectUrl := "https://trade.fyers.in/api-login/redirect-uri/index.html"
-// 	refreshToken := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiZDoxIiwiZDoyIiwieDowIiwieDoxIiwieDoyIl0sImF0X2hhc2giOiJnQUFBQUFCcGxVNE1xZUpQUFdYNWhWQzcyNkZQVTVXTHpjcFRXMjQ3OGFDdGJMemwybE42TmkzUEZpU0xKMHVDRldPVE9Fc3JIbjVlbWxVdVNiQ2F2UXlySTh0LXozeFdaWFo4MFRXZWFxb0JKeVdtbFFfYVNacz0iLCJkaXNwbGF5X25hbWUiOiIiLCJvbXMiOiJLMSIsImhzbV9rZXkiOiJkNWU1YWY5ZmM0NWMwMzZhY2FkZmE2M2ZhZDc1YzZhMmEwZjc3ZDRmMDFlMWJkMTNlMTc4YWI3YyIsImlzRGRwaUVuYWJsZWQiOiJZIiwiaXNNdGZFbmFibGVkIjoiWSIsImZ5X2lkIjoiWUswNDM5MSIsImFwcFR5cGUiOjEwMCwiZXhwIjoxNzcyNjcwNjAwLCJpYXQiOjE3NzEzOTI1MjQsImlzcyI6ImFwaS5meWVycy5pbiIsIm5iZiI6MTc3MTM5MjUyNCwic3ViIjoicmVmcmVzaF90b2tlbiJ9.ogZNRYM6lWQ4RRpVeOMuzpwmbAK9MLhPB89UBaFtxCY"
+// 	refreshToken := "eyjb...."
 // 	pin := "0000"
 
 // 	fyClient := fyersgosdk.SetClientData(appId, appSecret, redirectUrl)
@@ -167,7 +164,6 @@ import (
 // func main() {
 // 	appId := "AAAAAAAAA-100"
 // 	accessToken := "eyjb...."
-
 // 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
 // 	response, err := fyModel.GetPositions()
 // 	if err != nil {
@@ -289,15 +285,41 @@ import (
 // 		Qty:          1,
 // 		Type:         1,
 // 		Side:         1,
-// 		ProductType:  "CNC",
-// 		LimitPrice:   100,
+// 		ProductType:  fyersgosdk.ProductCNC,
+// 		LimitPrice:   12,
 // 		StopPrice:    0,
 // 		Validity:     "DAY",
 // 		DisclosedQty: 1,
 // 		OfflineOrder: false,
-// 		StopLoss:     0,
-// 		TakeProfit:   0,
 // 		OrderTag:     "TESTEST",
+// 		TakeProfit:   10.5, // optional float
+// 		StopLoss:     5.0,  // optional float
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error single order action: %v", err)
+// 	} else {
+// 		fmt.Println("single order action: ", response)
+// 	}
+// }
+
+// Single Order Placement with TP/SL offsets (replaces deprecated BO/CO)
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+// 	response, err := fyModel.SingleOrderAction(fyersgosdk.OrderRequest{
+// 		Symbol:       "NSE:SBIN-EQ",
+// 		Qty:          10,
+// 		Type:         1,
+// 		Side:         1,
+// 		ProductType:  fyersgosdk.ProductIntraday,
+// 		LimitPrice:   500.0,
+// 		Validity:     "DAY",
+// 		TakeProfit:   10.5, // optional float
+// 		StopLoss:     5.0,  // optional float
+// 		LegType:      fyersgosdk.LegTypePoints,
+// 		OrderTag:     "TPSL",
 // 	})
 // 	if err != nil {
 // 		fmt.Printf("Error single order action: %v", err)
@@ -313,9 +335,9 @@ import (
 
 // 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
 // 	response, err := fyModel.MultiOrderAction([]fyersgosdk.OrderRequest{
-// 		{Symbol: "NSE:ITC-EQ", Qty: 1, Type: 1, Side: 1, ProductType: "CNC", LimitPrice: 165, StopPrice: 0, DisclosedQty: 0, Validity: "DAY", OfflineOrder: true, StopLoss: 0, TakeProfit: 0, OrderTag: "tag1"},
-// 		{Symbol: "NSE:ITC-EQ", Qty: 1, Type: 1, Side: 1, ProductType: "CNC", LimitPrice: 165, StopPrice: 0, DisclosedQty: 0, Validity: "DAY", OfflineOrder: true, StopLoss: 0, TakeProfit: 0, OrderTag: "tag1"},
-// 		{Symbol: "NSE:ITC-EQ", Qty: 1, Type: 1, Side: 1, ProductType: "CNC", LimitPrice: 165, StopPrice: 0, DisclosedQty: 0, Validity: "DAY", OfflineOrder: true, StopLoss: 0, TakeProfit: 0, OrderTag: "tag1"},
+// 		{Symbol: "NSE:ITC-EQ", Qty: 1, Type: 1, Side: 1, ProductType: fyersgosdk.ProductCNC, LimitPrice: 165, StopPrice: 0, DisclosedQty: 0, Validity: "DAY", OfflineOrder: true, OrderTag: "tag1"},
+// 		{Symbol: "NSE:ITC-EQ", Qty: 1, Type: 1, Side: 1, ProductType: fyersgosdk.ProductCNC, LimitPrice: 165, StopPrice: 0, DisclosedQty: 0, Validity: "DAY", OfflineOrder: true, OrderTag: "tag1"},
+// 		{Symbol: "NSE:ITC-EQ", Qty: 1, Type: 1, Side: 1, ProductType: fyersgosdk.ProductCNC, LimitPrice: 165, StopPrice: 0, DisclosedQty: 0, Validity: "DAY", OfflineOrder: true, OrderTag: "tag1"},
 // 	})
 // 	if err != nil {
 // 		fmt.Printf("Error multi order action: %v", err)
@@ -502,6 +524,24 @@ import (
 // 	}
 // }
 
+// Modify Order TP/SL (update takeProfit, remove stopLoss)
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+// 	response, err := fyModel.ModifyOrder(fyersgosdk.ModifyOrderRequest{
+// 		Id:         "23072800012345",
+// 		TakeProfit:    15.0,
+// 		ClearStopLoss: true, // sends "stopLoss": null
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error modify order TP/SL: %v", err)
+// 	} else {
+// 		fmt.Println("modify order TP/SL: ", response)
+// 	}
+// }
+
 // Modify Multi Orders
 // func main() {
 // 	appId := "AAAAAAAAA-100"
@@ -631,6 +671,25 @@ import (
 // 		fmt.Printf("Error convert position: %v", err)
 // 	} else {
 // 		fmt.Println("Convert position: ", response)
+// 	}
+// }
+
+// Attach TP/SL legs to an open position
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+// 	response, err := fyModel.AttachPositionLegs(fyersgosdk.AttachPositionLegsRequest{
+// 		PositionID: "NSE:SBIN-EQ-INTRADAY",
+// 		TakeProfit: 2.5,
+// 		StopLoss:   1.5,
+// 		LegType:    fyersgosdk.LegTypePercent,
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error attach position legs: %v", err)
+// 	} else {
+// 		fmt.Println("Attach position legs: ", response)
 // 	}
 // }
 
@@ -1148,20 +1207,39 @@ import (
 // }
 
 // option chain
-func main() {
-	appId := "GT2V66D5Y4-101"
-	accessToken := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsieDowIl0sImF0X2hhc2giOiJnQUFBQUFCcDF6ZXl3bFdqMXlFd3dfa0lHSzBDcGJBbWFTWFdsY0RNdkpMTkxiX2pmOXhMaGpzVjJCQzZUZDdfSDA1dzZvUnlXRzdqMGdmSEI3S29mRlVsUVJHNGxuU2QwSE5WM1VWRnVkYzRZaFVETkxtb2FsND0iLCJkaXNwbGF5X25hbWUiOiIiLCJvbXMiOiJLMSIsImhzbV9rZXkiOiJjZGE1NGVmMDU1NGYzMmFjOTg2NWViNzMxMGNiMzk1ZmRiYTc1MTY5ZTY3NWNjZjc3OWJjMDM0ZCIsImlzRGRwaUVuYWJsZWQiOiJOIiwiaXNNdGZFbmFibGVkIjoiWSIsImZ5X2lkIjoiRkFGNTA2NzUiLCJhcHBUeXBlIjoxMDEsImV4cCI6MTc3NTc4MTAwMCwiaWF0IjoxNzc1NzEyMTc4LCJpc3MiOiJhcGkuZnllcnMuaW4iLCJuYmYiOjE3NzU3MTIxNzgsInN1YiI6ImFjY2Vzc190b2tlbiJ9.hNoVAtbeD8-i8bRLTDEUjKppMVnQ9ERaPNTafEMAb0U"
-	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
 
-	response, err := fyModel.GetOptionChain(fyersgosdk.OptionChainRequest{
-		Symbol:      "NSE:TCS-EQ",
-		StrikeCount: 1,
-		Timestamp:   "", // optional
-		Greeks:      "1",
-	})
-	if err != nil {
-		fmt.Printf("Error getting option chain: %v", err)
-	} else {
-		fmt.Println("Option chain: ", response)
-	}
-}
+// 	response, err := fyModel.GetOptionChain(fyersgosdk.OptionChainRequest{
+// 		Symbol:      "NSE:TCS-EQ",
+// 		StrikeCount: 1,
+// 		Timestamp:   "", // optional
+// 		Greeks:      "1",
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error getting option chain: %v", err)
+// 	} else {
+// 		fmt.Println("Option chain: ", response)
+// 	}
+// }
+
+// Attach TP/SL legs to an open position
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.AttachPositionLegs(fyersgosdk.AttachPositionLegsRequest{
+// 		PositionID: "NSE:IDEA-EQ-INTRADAY",
+// 		TakeProfit: 1,
+// 		StopLoss:   2,
+// 		LegType:    fyersgosdk.LegTypePoints,
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error attach position legs: %v", err)
+// 	} else {
+// 		fmt.Println("Attach position legs: ", response)
+// 	}
+// }

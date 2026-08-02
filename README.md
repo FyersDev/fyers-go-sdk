@@ -1,6 +1,6 @@
 <a href="https://fyers.in/"><img src="https://assets.fyers.in/images/logo.svg" align="right" /></a>
 
-# Fyers Go SDK : fyers-api-v3 - v1.4.0
+# Fyers Go SDK : fyers-api-v3 - v1.5.0
 
 The official Fyers Go SDK for API-V3 Users [FYERS API](https://fyers.in/products/api/).
 
@@ -16,6 +16,7 @@ Fyers API is a set of REST-like APIs that provide integration with our in-house 
 - **Authentication**: OAuth2-based authentication with automatic token management
 - **Real-time Data**: WebSocket streaming for live market data and order updates
 - **Trading Operations**: Place, modify, and cancel orders with support for various order types
+- **TP/SL Smart Orders**: Attach take-profit / stop-loss offsets on place, modify, or open positions (`BO`/`CO` deprecated)
 - **Portfolio Management**: Access holdings, positions, and fund information
 - **Market Data**: Historical data, real-time quotes, market depth, and options chain
 - **Error Handling**: Comprehensive error handling with detailed error messages
@@ -129,6 +130,67 @@ func main() {
         LimitPrice: 100, Validity: "DAY", DisclosedQty: 0, OfflineOrder: false,
     })
     fmt.Println("Response:", response)
+}
+```
+
+### Place an Order with TP/SL (offsets)
+
+TP/SL values are **optional offsets** (points or percent of entry), not absolute prices. Set `takeProfit`, `stopLoss`, both, or neither. Use standard product types (`CNC`, `INTRADAY`, `MARGIN`, `MTF`) — `BO` / `CO` are deprecated and rejected by the API.
+
+```go
+package main
+
+import (
+    "fmt"
+    fyersgosdk "github.com/FyersDev/fyers-go-sdk"
+)
+
+func main() {
+    fyModel := fyersgosdk.NewFyersModel("AAAAAAAAA-100", "eyjb....")
+
+    // Place with take-profit / stop-loss overlays (sync endpoint only)
+    response, err := fyModel.SingleOrderAction(fyersgosdk.OrderRequest{
+        Symbol:      "NSE:SBIN-EQ",
+        Qty:         10,
+        Type:        1,
+        Side:        1,
+        ProductType: fyersgosdk.ProductIntraday,
+        LimitPrice:  500.0,
+        Validity:    "DAY",
+        TakeProfit:  10.5, // optional float
+        StopLoss:    5.0,  // optional float — omit either field (or leave 0) if not needed
+        LegType:     fyersgosdk.LegTypePoints, // 1 = points, 2 = percent
+    })
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
+    fmt.Println("Response:", response)
+
+    // Update TP and remove SL on an open order
+    mod, err := fyModel.ModifyOrder(fyersgosdk.ModifyOrderRequest{
+        Id:            "23072800012345",
+        TakeProfit:    15.0,
+        ClearStopLoss: true, // sends "stopLoss": null
+    })
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
+    fmt.Println("Modify:", mod)
+
+    // Attach TP/SL to an open position
+    attach, err := fyModel.AttachPositionLegs(fyersgosdk.AttachPositionLegsRequest{
+        PositionID: "NSE:SBIN-EQ-INTRADAY",
+        TakeProfit: 2.5,
+        StopLoss:   1.5,
+        LegType:    fyersgosdk.LegTypePercent,
+    })
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
+    fmt.Println("Attach:", attach)
 }
 ```
 
@@ -275,7 +337,7 @@ All API methods return `(string, error)`; the string is the raw JSON response. U
 | `SingleOrderAction(orderRequest OrderRequest) (string, error)` | Place single order. |
 | `MultiOrderAction(orderRequests []OrderRequest) (string, error)` | Place multiple orders. |
 | `MultiLegOrderAction(orderRequests []MultiLegOrderRequest) (string, error)` | Place multi-leg orders. |
-| `ModifyOrder(orderRequest ModifyOrderRequest) (string, error)` | Modify single order (PATCH). |
+| `ModifyOrder(orderRequest ModifyOrderRequest) (string, error)` | Modify single order (PATCH). Supports optional `takeProfit` / `stopLoss` / `legType`. |
 | `ModifyMutliOrder(requests []ModifyMultiOrderItem) (string, error)` | Modify multiple orders (PATCH). |
 | `CancelOrder(Id string) (string, error)` | Cancel single order. |
 | `CancelMutliOrder(orderIds []string) (string, error)` | Cancel multiple orders (DELETE). |
@@ -299,6 +361,7 @@ All API methods return `(string, error)`; the string is the raw JSON response. U
 | `ExitPositionByProductType(req ExitPositionByProductTypeRequest) (string, error)` | Exit by segment/side/productType. |
 | `CancelPendingOrders(req CancelPendingOrdersRequest) (string, error)` | Cancel pending orders (optional Id for single symbol). |
 | `ConvertPosition(req ConvertPositionRequest) (string, error)` | Convert position (e.g. INTRADAY to CNC). |
+| `AttachPositionLegs(req AttachPositionLegsRequest) (string, error)` | Attach/update/remove TP/SL legs on an open position (PATCH). |
 
 ### Market Data (FyersModel)
 
@@ -438,10 +501,10 @@ All runnable examples live in **[examples/fyers/fyers.go](examples/fyers/fyers.g
 - **Get Positions** – `GetPositions`
 
 ### Orders
-- **Single Order Placement** – `SingleOrderAction`
+- **Single Order Placement** – `SingleOrderAction` (supports `takeProfit` / `stopLoss` / `legType` offsets)
 - **Multi Order Placement** – `MultiOrderAction`
 - **MultiLeg Order** – `MultiLegOrderAction`
-- **Modify Orders** – `ModifyOrder`
+- **Modify Orders** – `ModifyOrder` (update TP/SL via float fields; clear with `ClearTakeProfit` / `ClearStopLoss`)
 - **Modify Multi Orders** – `ModifyMutliOrder`
 - **Cancel Order** – `CancelOrder`
 - **Multi Cancel Order** – `CancelMutliOrder`
@@ -475,7 +538,7 @@ All runnable examples live in **[examples/fyers/fyers.go](examples/fyers/fyers.g
 - **Exit Position by Tag** – `ExitPositionByProductType`
 - **Pending Order Cancel** – `CancelPendingOrders`
 - **Convert Position** – `ConvertPosition`
-
+- **Attach Position TP/SL Legs** – `AttachPositionLegs`
 ### Alerts
 - **Create Price Alert** – `CreateAlert`
 - **Get Price Alerts** – `GetAlerts`

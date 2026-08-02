@@ -1,0 +1,14 @@
+README.md
+  h_e5cd7b20a98a26 3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "1d3abded9e1f40a1a2e67f4a3d9f6edba461595c",
+  "prompts": {},
+  "humans": {
+    "h_e5cd7b20a98a26": {
+      "author": "kishore-fyers <kishorekumar@fyers.in>"
+    }
+  }
+}

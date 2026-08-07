@@ -1,0 +1,36 @@
+websocket/data_ws.go
+  s_c30e6bb0b082a5::t_b11bca3f021cd4 597,609-617
+  s_c30e6bb0b082a5::t_df57cef3c2b476 1507-1508
+  s_c30e6bb0b082a5::t_97d94ece72aa99 618-619
+models.go
+  s_19d13bdef32998::t_c63bfe3bbb912a 247
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "85dd4399076e9026e41b3bd855e187cba668ebc7",
+  "prompts": {},
+  "humans": {
+    "h_e5cd7b20a98a26": {
+      "author": "kishore-fyers <kishorekumar@fyers.in>"
+    }
+  },
+  "sessions": {
+    "s_19d13bdef32998": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "54acbedf-0f80-40a9-8b19-3d9a4ca38295",
+        "model": "default"
+      },
+      "human_author": "kishore-fyers <kishorekumar@fyers.in>"
+    },
+    "s_c30e6bb0b082a5": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "63df3fa0-6c4f-42be-8f97-d94aa5a07f87",
+        "model": "default"
+      },
+      "human_author": "kishore-fyers <kishorekumar@fyers.in>"
+    }
+  }
+}

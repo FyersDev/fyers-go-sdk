@@ -244,7 +244,7 @@ type OrderRequest struct {
 	StopLoss float64 `json:"stopLoss,omitempty"`
 	// LegType is optional. 1 = points (default), 2 = percent. Used when TakeProfit and/or StopLoss are set.
 	LegType      int    `json:"legType,omitempty"`
-	OrderTag     string `json:"orderTag"`
+	OrderTag     string `json:"orderTag,omitempty"`
 	IsSliceOrder bool   `json:"isSliceOrder,omitempty"`
 }
 

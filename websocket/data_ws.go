@@ -594,7 +594,7 @@ func (f *FyersDataSocket) runReconnectLoop(maxAttempts int) {
 		f.mu.Lock()
 		f.reconnectAttempts++
 		f.scripsPerChannel[f.channelNum] = nil
-
+		f.clearTopicIDMapsLocked()
 		f.mu.Unlock()
 
 		err := f.Connect()
@@ -604,6 +604,17 @@ func (f *FyersDataSocket) runReconnectLoop(maxAttempts int) {
 		}
 
 	}
+}
+
+func (f *FyersDataSocket) clearTopicIDMapsLocked() {
+	f.scripsSym = make(map[uint16]string)
+	f.indexSym = make(map[uint16]string)
+	f.dpSym = make(map[uint16]string)
+	f.resp = make(map[string]map[string]interface{})
+	f.symbolDict = make(map[string]string)
+	f.liteResp = make(map[string]interface{})
+	f.lastLtpScrips = make(map[string]int32)
+	f.lastLtpIndex = make(map[string]int32)
 }
 
 func (f *FyersDataSocket) handleMessage(message []byte) {
@@ -1493,6 +1504,8 @@ func (f *FyersDataSocket) CloseConnection() {
 		f.wsRun = nil
 	}
 	f.connected = false
+	f.scripsPerChannel[f.channelNum] = nil
+	f.clearTopicIDMapsLocked()
 	f.mu.Unlock()
 
 	f.stopOnce.Do(func() { close(f.stopChan) })

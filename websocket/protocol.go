@@ -11,10 +11,6 @@ import (
 	"runtime"
 	"strings"
 	"sync"
-
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/s3"
 )
 
 type Protocol interface {
@@ -70,7 +66,7 @@ func newSymbolConversion(accessToken, dataType, logPath string) *symbolConversio
 }
 
 // Get index mapping.
-// First call loads from S3, falling back to map.json on error.
+// First call get from public API, falling back to map.json on error.
 // Result is cached in memory for subsequent calls.
 func (sc *symbolConversion) getIndexHSMMapping(
 	fallbackIndexDict map[string]interface{},
@@ -81,23 +77,26 @@ func (sc *symbolConversion) getIndexHSMMapping(
 
 	// Already loaded in memory.
 	if indexHSMMappingCache != nil {
-		fmt.Println("-----1------", indexHSMMappingCache)
+		sc.dataLogger.Debug(
+			"Index mapping already loaded in memory. Returning cached mapping.",
+		)
 		return indexHSMMappingCache
 	}
 
-	indexDict, err := sc.loadIndexDictMapJSON()
+	indexDict, err := sc.getIndexDictMapJSON()
 	if err != nil {
 		sc.dataLogger.Exception(err)
-		fmt.Println(
+		sc.dataLogger.Debug(
 			"S3 index mapping load failed. Falling back to map.json index_dict.",
 		)
-		// S3 failed -> use local map.json.
+		// API call failed -> use local map.json.
 		indexHSMMappingCache = fallbackIndexDict
-		fmt.Println("-----2------", fallbackIndexDict)
 	} else {
-		// S3 succeeded -> cache S3 mapping.
+		sc.dataLogger.Debug(
+			"API index mapping load succeeded. Caching API mapping.",
+		)
+		// API call succeeded -> cache API mapping.
 		indexHSMMappingCache = indexDict
-		fmt.Println("-----3------", indexDict)
 	}
 
 	return indexHSMMappingCache
@@ -244,30 +243,14 @@ func (sc *symbolConversion) loadMapJSON() (map[string]interface{}, error) {
 	return mapData, nil
 }
 
-func (sc *symbolConversion) loadIndexDictMapJSON() (map[string]interface{}, error) {
-	sess, err := session.NewSession(&aws.Config{
-		Region: aws.String("ap-south-1"),
-	})
+func (sc *symbolConversion) getIndexDictMapJSON() (map[string]interface{}, error) {
+	resp, err := http.Get(INDEX_HSM_MAPPING_URL)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create AWS session: %w", err)
+		return nil, fmt.Errorf("failed to get index HSM mapping JSON: %w", err)
 	}
+	defer resp.Body.Close()
 
-	s3Client := s3.New(sess)
-
-	result, err := s3Client.GetObject(&s3.GetObjectInput{
-		Bucket: aws.String("fas-trd-s3-public"),
-		Key:    aws.String("sym_details/index_hsm_mapping.json"),
-	})
-	if err != nil {
-		return nil, fmt.Errorf("failed to download index HSM mapping from S3: %w", err)
-	}
-	defer result.Body.Close()
-
-	data, err := io.ReadAll(result.Body)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read S3 object: %w", err)
-	}
-
+	data, err := io.ReadAll(resp.Body)
 	var mapData map[string]interface{}
 	if err := json.Unmarshal(data, &mapData); err != nil {
 		return nil, fmt.Errorf("failed to parse index HSM mapping JSON: %w", err)

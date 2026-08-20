@@ -1,0 +1,16 @@
+go.mod
+  h_2d703f756f0117 5-10
+websocket/protocol.go
+  h_2d703f756f0117 13-17,44-48,72-105,152,246-277
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "79d0cc19458462fffab80e44e06e1080913c70c4",
+  "prompts": {},
+  "humans": {
+    "h_2d703f756f0117": {
+      "author": "Preethi Harimoorthy <em1112@FYPLMB10250.local>"
+    }
+  }
+}

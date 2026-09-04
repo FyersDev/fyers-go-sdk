@@ -1,0 +1,14 @@
+examples/fyers/fyers.go
+  h_e5cd7b20a98a26 1213-1214,1217-1241,1244,1246-1264,1268-1306,1325-1342
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "39f9827dd4200578f32e1e722d53a3394474f33b",
+  "prompts": {},
+  "humans": {
+    "h_e5cd7b20a98a26": {
+      "author": "kishore-fyers <kishorekumar@fyers.in>"
+    }
+  }
+}

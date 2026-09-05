@@ -876,14 +876,14 @@ type ScreenersTechnical struct {
 }
 
 type ExpiryDatesRequest struct {
-	UnderlyingSymbol string `json:"underlying_symbol"`
+	UnderlyingSymbol string `json:"symbol"`
 	RangeFrom        string `json:"range_from"`
 	RangeTo          string `json:"range_to"`
 	DateFormat       string `json:"date_format"`
 }
 
 type HistoryUnderlyingSymbolsRequest struct {
-	UnderlyingSymbol string `json:"underlying_symbol"`
+	UnderlyingSymbol string `json:"symbol"`
 	ExpiryDate       string `json:"expiry_date"`
 }
 

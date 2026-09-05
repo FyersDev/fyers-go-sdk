@@ -1,0 +1,26 @@
+data.go
+  s_e510a4063bc033::t_155355bf21c44e 67,81
+models.go
+  s_e510a4063bc033::t_1b83fbd9fd041b 879,886
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "779499e9698bd5f81950cc29841cb8d717f739ce",
+  "prompts": {},
+  "humans": {
+    "h_e5cd7b20a98a26": {
+      "author": "kishore-fyers <kishorekumar@fyers.in>"
+    }
+  },
+  "sessions": {
+    "s_e510a4063bc033": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b80ed66b-faec-4cad-8533-3681dbd04ced",
+        "model": "claude-opus-5"
+      },
+      "human_author": "kishore-fyers <kishorekumar@fyers.in>"
+    }
+  }
+}

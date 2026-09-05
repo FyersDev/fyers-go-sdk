@@ -1289,20 +1289,20 @@ package main
 
 // 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
 
-// 	response, err := fyModel.GetFNOHistoricalData(fyersgosdk.HistoryRequest{
+// 	response, err := fyModel.GetFNOHistoricalData(fyersgosdk.FNOHistoricalDataRequest{
 // 		Symbol:     "NSE:NIFTY24NOV22500CE",
 // 		Resolution: "5",
 // 		DateFormat: "1",
 // 		RangeFrom:  "2024-11-01",
 // 		RangeTo:    "2024-11-28",
-// 		ContFlag:   "1",
+// 		Greeks:     "1",
 // 	})
 // 	if err != nil {
 // 		fmt.Printf("Error getting FNO historical data: %v", err)
 // 	} else {
 // 		fmt.Println("FNO historical data: ", response)
 // 	}
-// // }
+// }
 
 // Attach TP/SL legs to an open position
 // func main() {

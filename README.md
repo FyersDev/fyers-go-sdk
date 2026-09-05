@@ -110,6 +110,56 @@ func main() {
 }
 ```
 
+### Futures Chain & Expired FNO Data
+
+```go
+package main
+
+import (
+    "fmt"
+    fyersgosdk "github.com/FyersDev/fyers-go-sdk"
+)
+
+func main() {
+    fyModel := fyersgosdk.NewFyersModel("AAAAAAAAA-100", "eyjb....")
+
+    // Futures chain for an index or underlying
+    chain, err := fyModel.GetFuturesChain(fyersgosdk.FuturesChainRequest{
+        Symbol: "NSE:NIFTY50-INDEX",
+    })
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
+    fmt.Println("Futures chain:", chain)
+
+    // Expired FNO workflow: expiry dates → contracts → historical candles
+    expiry, err := fyModel.GetExpiryDates(fyersgosdk.ExpiryDatesRequest{
+        UnderlyingSymbol: "NSE:NIFTY50-INDEX",
+        RangeFrom:        "2024-01-01",
+        RangeTo:          "2024-12-31",
+        DateFormat:       "1",
+    })
+    fmt.Println("Expiry dates:", expiry)
+
+    contracts, err := fyModel.GetHistoryUnderlyingSymbols(fyersgosdk.HistoryUnderlyingSymbolsRequest{
+        UnderlyingSymbol: "NSE:NIFTY50-INDEX",
+        ExpiryDate:       "2024-11-28",
+    })
+    fmt.Println("Expired contracts:", contracts)
+
+    history, err := fyModel.GetFNOHistoricalData(fyersgosdk.FNOHistoricalDataRequest{
+        Symbol:     "NSE:NIFTY24NOV22500CE",
+        Resolution: "5",
+        DateFormat: "1",
+        RangeFrom:  "2024-11-01",
+        RangeTo:    "2024-11-28",
+        Greeks:     "1",
+    })
+    fmt.Println("FNO historical data:", history)
+}
+```
+
 ### Place an Order
 
 ```go
@@ -398,10 +448,15 @@ All API methods return `(string, error)`; the string is the raw JSON response. U
 | `GetStockQuotes(symbols []string) (string, error)` | Quotes for up to 50 symbols. |
 | `GetMarketDepth(req MarketDepthRequest) (string, error)` | Market depth (symbol, ohlcv_flag). |
 | `GetOptionChain(req OptionChainRequest) (string, error)` | Options chain. |
+
+### Futures Chain & Expired FNO (FyersModel)
+
+| Method | Description |
+|--------|-------------|
+| `GetFuturesChain(req FuturesChainRequest) (string, error)` | Futures chain for an underlying symbol (e.g. `NSE:NIFTY50-INDEX`). |
 | `GetExpiryDates(req ExpiryDatesRequest) (string, error)` | Expiry dates for an underlying symbol (expired FNO). |
-| `GetHistoryUnderlyingSymbols(req HistoryUnderlyingSymbolsRequest) (string, error)` | Underlying symbols for a given expiry (expired FNO). |
-| `GetFuturesChain(req FuturesChainRequest) (string, error)` | Futures chain for an underlying symbol. |
-| `GetFNOHistoricalData(req HistoryRequest) (string, error)` | OHLCV history for expired FNO contracts. |
+| `GetHistoryUnderlyingSymbols(req HistoryUnderlyingSymbolsRequest) (string, error)` | Expired contract symbols for a given underlying and expiry date. |
+| `GetFNOHistoricalData(req FNOHistoricalDataRequest) (string, error)` | OHLCV history for expired FNO contracts. Optional `greeks`. |
 
 ### Screeners (FyersModel)
 
@@ -588,9 +643,11 @@ All runnable examples live in **[examples/fyers/fyers.go](examples/fyers/fyers.g
 - **Market depth** – `GetMarketDepth`
 - **Option Chain** – `GetOptionChain`
 - **Get History** – `GetHistory`
+
+### Futures Chain & Expired FNO
+- **Futures Chain** – `GetFuturesChain`
 - **Expiry Dates (Expired FNO)** – `GetExpiryDates`
 - **Underlying Symbols (Expired FNO)** – `GetHistoryUnderlyingSymbols`
-- **Futures Chain** – `GetFuturesChain`
 - **FNO Historical Data (Expired)** – `GetFNOHistoricalData`
 
 ### Screeners

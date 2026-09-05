@@ -596,6 +596,16 @@ type HistoryRequest struct {
 	ContFlag   string `json:"cont_flag,omitempty"`
 }
 
+type FNOHistoricalDataRequest struct {
+	Symbol     string `json:"symbol"`
+	Resolution string `json:"resolution"`
+	DateFormat string `json:"date_format"`
+	RangeFrom  string `json:"range_from"`
+	RangeTo    string `json:"range_to"`
+	OiFlag     string `json:"oi_flag,omitempty"`
+	Greeks     string `json:"greeks,omitempty"`
+}
+
 type HistoryResponse struct {
 	APIResponse
 	Candles [][]interface{} `json:"candles"`

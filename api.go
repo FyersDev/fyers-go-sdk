@@ -57,6 +57,6 @@ const (
 	ScreenersTechnicalURL       = BaseURL + "/screeners/technical"
 	ExpiryDatesURL              = BaseDataURL + "/history/fno/expired/expiry-dates"
 	HistoryUnderlyingSymbolsURL = BaseDataURL + "/history/fno/expired/underlying-symbols"
-	FuturesChainURL             = BaseURL + "/futures-chain"
+	FuturesChainURL             = BaseDataURL + "/futures-chain"
 	FNOHistoricalDataURL        = BaseDataURL + "/history/fno/expired/historical-data"
 )

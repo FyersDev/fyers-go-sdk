@@ -1210,8 +1210,8 @@ package main
 
 // option chain
 // func main() {
-// 	appId := "GT2V66D5Y4-101"
-// 	accessToken := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsieDowIl0sImF0X2hhc2giOiJnQUFBQUFCcDF6ZXl3bFdqMXlFd3dfa0lHSzBDcGJBbWFTWFdsY0RNdkpMTkxiX2pmOXhMaGpzVjJCQzZUZDdfSDA1dzZvUnlXRzdqMGdmSEI3S29mRlVsUVJHNGxuU2QwSE5WM1VWRnVkYzRZaFVETkxtb2FsND0iLCJkaXNwbGF5X25hbWUiOiIiLCJvbXMiOiJLMSIsImhzbV9rZXkiOiJjZGE1NGVmMDU1NGYzMmFjOTg2NWViNzMxMGNiMzk1ZmRiYTc1MTY5ZTY3NWNjZjc3OWJjMDM0ZCIsImlzRGRwaUVuYWJsZWQiOiJOIiwiaXNNdGZFbmFibGVkIjoiWSIsImZ5X2lkIjoiRkFGNTA2NzUiLCJhcHBUeXBlIjoxMDEsImV4cCI6MTc3NTc4MTAwMCwiaWF0IjoxNzc1NzEyMTc4LCJpc3MiOiJhcGkuZnllcnMuaW4iLCJuYmYiOjE3NzU3MTIxNzgsInN1YiI6ImFjY2Vzc190b2tlbiJ9.hNoVAtbeD8-i8bRLTDEUjKppMVnQ9ERaPNTafEMAb0U"
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
 // 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
 
 // // 	response, err := fyModel.GetOptionChain(fyersgosdk.OptionChainRequest{
@@ -1229,8 +1229,8 @@ package main
 
 // Expiry Dates (Expired FNO)
 // func main() {
-// 	appId := "BQ6KVNTLF1-200"
-// 	accessToken := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiZDoxIiwiZDoyIiwieDowIiwieDoxIiwieDoyIl0sImF0X2hhc2giOiJnQUFBQUFCcVMwaG9hTnVkc3kwZ240TG5PS05ZZ3VwR1Q1VTFxZHFWbGxaVXp2NzY2OHZXMURDOXM1c25KSnlpcmVrazVCa3QxTGJzczdhd0R3VF9Ld2pNWktucHRsUFA5TDVpaE1GY3dDT0d6MFRSUF96cmprdz0iLCJkaXNwbGF5X25hbWUiOiIiLCJvbXMiOiJLMSIsImhzbV9rZXkiOiI3ZmRkMzAyYjhiZjQwNWMwMGRhNjE2ODEzNTM2OGM0NmNjZDYyMTgyZGU1NTIyN2FmYjc0NjZmMCIsImlzRGRwaUVuYWJsZWQiOiJOIiwiaXNNdGZFbmFibGVkIjoiTiIsImZ5X2lkIjoiWFIyNDc2MSIsImFwcFR5cGUiOjIwMCwiZXhwIjoxNzgzMzg0MjAwLCJpYXQiOjE3ODMzMTg2MzIsImlzcyI6ImFwaS5meWVycy5jby5pbiIsIm5iZiI6MTc4MzMxODYzMiwic3ViIjoiYWNjZXNzX3Rva2VuIn0.AwLllDIS9PiRNjiBpxSIpX3I1jCmL8Eqigx8qqYrcbk"
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
 
 // 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
 
@@ -1249,8 +1249,8 @@ package main
 
 // Underlying Symbols (Expired FNO)
 // func main() {
-// 	appId := "BQ6KVNTLF1-200"
-// 	accessToken := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiZDoxIiwiZDoyIiwieDowIiwieDoxIiwieDoyIl0sImF0X2hhc2giOiJnQUFBQUFCcVMwaG9hTnVkc3kwZ240TG5PS05ZZ3VwR1Q1VTFxZHFWbGxaVXp2NzY2OHZXMURDOXM1c25KSnlpcmVrazVCa3QxTGJzczdhd0R3VF9Ld2pNWktucHRsUFA5TDVpaE1GY3dDT0d6MFRSUF96cmprdz0iLCJkaXNwbGF5X25hbWUiOiIiLCJvbXMiOiJLMSIsImhzbV9rZXkiOiI3ZmRkMzAyYjhiZjQwNWMwMGRhNjE2ODEzNTM2OGM0NmNjZDYyMTgyZGU1NTIyN2FmYjc0NjZmMCIsImlzRGRwaUVuYWJsZWQiOiJOIiwiaXNNdGZFbmFibGVkIjoiTiIsImZ5X2lkIjoiWFIyNDc2MSIsImFwcFR5cGUiOjIwMCwiZXhwIjoxNzgzMzg0MjAwLCJpYXQiOjE3ODMzMTg2MzIsImlzcyI6ImFwaS5meWVycy5jby5pbiIsIm5iZiI6MTc4MzMxODYzMiwic3ViIjoiYWNjZXNzX3Rva2VuIn0.AwLllDIS9PiRNjiBpxSIpX3I1jCmL8Eqigx8qqYrcbk"
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
 
 // 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
 
@@ -1267,8 +1267,8 @@ package main
 
 // Futures Chain
 // func main() {
-// 	appId := "BQ6KVNTLF1-200"
-// 	accessToken := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiZDoxIiwiZDoyIiwieDowIiwieDoxIiwieDoyIl0sImF0X2hhc2giOiJnQUFBQUFCcVMwaG9hTnVkc3kwZ240TG5PS05ZZ3VwR1Q1VTFxZHFWbGxaVXp2NzY2OHZXMURDOXM1c25KSnlpcmVrazVCa3QxTGJzczdhd0R3VF9Ld2pNWktucHRsUFA5TDVpaE1GY3dDT0d6MFRSUF96cmprdz0iLCJkaXNwbGF5X25hbWUiOiIiLCJvbXMiOiJLMSIsImhzbV9rZXkiOiI3ZmRkMzAyYjhiZjQwNWMwMGRhNjE2ODEzNTM2OGM0NmNjZDYyMTgyZGU1NTIyN2FmYjc0NjZmMCIsImlzRGRwaUVuYWJsZWQiOiJOIiwiaXNNdGZFbmFibGVkIjoiTiIsImZ5X2lkIjoiWFIyNDc2MSIsImFwcFR5cGUiOjIwMCwiZXhwIjoxNzgzMzg0MjAwLCJpYXQiOjE3ODMzMTg2MzIsImlzcyI6ImFwaS5meWVycy5jby5pbiIsIm5iZiI6MTc4MzMxODYzMiwic3ViIjoiYWNjZXNzX3Rva2VuIn0.AwLllDIS9PiRNjiBpxSIpX3I1jCmL8Eqigx8qqYrcbk"
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
 
 // 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
 
@@ -1284,8 +1284,8 @@ package main
 
 // FNO Historical Data (Expired)
 // func main() {
-// 	appId := "BQ6KVNTLF1-200"
-// 	accessToken := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiZDoxIiwiZDoyIiwieDowIiwieDoxIiwieDoyIl0sImF0X2hhc2giOiJnQUFBQUFCcVMwaG9hTnVkc3kwZ240TG5PS05ZZ3VwR1Q1VTFxZHFWbGxaVXp2NzY2OHZXMURDOXM1c25KSnlpcmVrazVCa3QxTGJzczdhd0R3VF9Ld2pNWktucHRsUFA5TDVpaE1GY3dDT0d6MFRSUF96cmprdz0iLCJkaXNwbGF5X25hbWUiOiIiLCJvbXMiOiJLMSIsImhzbV9rZXkiOiI3ZmRkMzAyYjhiZjQwNWMwMGRhNjE2ODEzNTM2OGM0NmNjZDYyMTgyZGU1NTIyN2FmYjc0NjZmMCIsImlzRGRwaUVuYWJsZWQiOiJOIiwiaXNNdGZFbmFibGVkIjoiTiIsImZ5X2lkIjoiWFIyNDc2MSIsImFwcFR5cGUiOjIwMCwiZXhwIjoxNzgzMzg0MjAwLCJpYXQiOjE3ODMzMTg2MzIsImlzcyI6ImFwaS5meWVycy5jby5pbiIsIm5iZiI6MTc4MzMxODYzMiwic3ViIjoiYWNjZXNzX3Rva2VuIn0.AwLllDIS9PiRNjiBpxSIpX3I1jCmL8Eqigx8qqYrcbk"
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
 
 // 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
 

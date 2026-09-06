@@ -1212,16 +1212,93 @@ package main
 // 	accessToken := "eyjb...."
 // 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
 
-// 	response, err := fyModel.GetOptionChain(fyersgosdk.OptionChainRequest{
-// 		Symbol:      "NSE:TCS-EQ",
-// 		StrikeCount: 1,
-// 		Timestamp:   "", // optional
-// 		Greeks:      "1",
+// // 	response, err := fyModel.GetOptionChain(fyersgosdk.OptionChainRequest{
+// // 		Symbol:      "NSE:TCS-EQ",
+// // 		StrikeCount: 1,
+// // 		Timestamp:   "", // optional
+// // 		Greeks:      "1",
+// // 	})
+// // 	if err != nil {
+// // 		fmt.Printf("Error getting option chain: %v", err)
+// // 	} else {
+// // 		fmt.Println("Option chain: ", response)
+// // 	}
+// }
+
+// Expiry Dates (Expired FNO)
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.GetExpiryDates(fyersgosdk.ExpiryDatesRequest{
+// 		UnderlyingSymbol: "NSE:NIFTY50-INDEX",
+// 		RangeFrom:        "2024-01-01",
+// 		RangeTo:          "2024-12-31",
+// 		DateFormat:       "1",
 // 	})
 // 	if err != nil {
-// 		fmt.Printf("Error getting option chain: %v", err)
+// 		fmt.Printf("Error getting expiry dates: %v", err)
 // 	} else {
-// 		fmt.Println("Option chain: ", response)
+// 		fmt.Println("Expiry dates: ", response)
+// 	}
+// }
+
+// Underlying Symbols (Expired FNO)
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.GetHistoryUnderlyingSymbols(fyersgosdk.HistoryUnderlyingSymbolsRequest{
+// 		UnderlyingSymbol: "NSE:NIFTY50-INDEX",
+// 		ExpiryDate:       "2024-11-28",
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error getting underlying symbols: %v", err)
+// 	} else {
+// 		fmt.Println("Underlying symbols: ", response)
+// 	}
+// }
+
+// Futures Chain
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.GetFuturesChain(fyersgosdk.FuturesChainRequest{
+// 		Symbol: "NSE:NIFTY50-INDEX",
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error getting futures chain: %v", err)
+// 	} else {
+// 		fmt.Println("Futures chain: ", response)
+// 	}
+// }
+
+// FNO Historical Data (Expired)
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.GetFNOHistoricalData(fyersgosdk.FNOHistoricalDataRequest{
+// 		Symbol:     "NSE:NIFTY24NOV22500CE",
+// 		Resolution: "5",
+// 		DateFormat: "1",
+// 		RangeFrom:  "2024-11-01",
+// 		RangeTo:    "2024-11-28",
+// 		Greeks:     "1",
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error getting FNO historical data: %v", err)
+// 	} else {
+// 		fmt.Println("FNO historical data: ", response)
 // 	}
 // }
 
@@ -1243,3 +1320,21 @@ package main
 // 		fmt.Println("Attach position legs: ", response)
 // 	}
 // }
+
+// Attach TP/SL legs to an open position
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.AttachPositionLegs(fyersgosdk.AttachPositionLegsRequest{
+// 		PositionID: "NSE:IDEA-EQ-INTRADAY",
+// 		TakeProfit: 1,
+// 		StopLoss:   2,
+// 		LegType:    fyersgosdk.LegTypePoints,
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error attach position legs: %v", err)
+// 	} else {
+// 		fmt.Println("Attach position legs: ", response)
+// 	}

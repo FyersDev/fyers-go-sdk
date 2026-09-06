@@ -1,6 +1,6 @@
 <a href="https://fyers.in/"><img src="https://assets.fyers.in/images/logo.svg" align="right" /></a>
 
-# Fyers Go SDK : fyers-api-v3 - v1.5.1
+# Fyers Go SDK : fyers-api-v3 - v1.6.0
 
 The official Fyers Go SDK for API-V3 Users [FYERS API](https://fyers.in/products/api/).
 
@@ -18,7 +18,9 @@ Fyers API is a set of REST-like APIs that provide integration with our in-house 
 - **Trading Operations**: Place, modify, and cancel orders with support for various order types
 - **TP/SL Smart Orders**: Attach take-profit / stop-loss offsets on place, modify, or open positions (`BO`/`CO` deprecated)
 - **Portfolio Management**: Access holdings, positions, and fund information
-- **Market Data**: Historical data, real-time quotes, market depth, and options chain
+- **Market Data**: Historical data, real-time quotes, market depth, options chain, futures chain, and expired FNO data
+- **Reports**: Order/trade history, charges, realised profit, tax P&L, and ledger
+- **Smart Orders & Smart Exit**: Limit, step, SIP, and trail smart orders with lifecycle management
 - **Error Handling**: Comprehensive error handling with detailed error messages
 - **Type Safety**: Strongly typed Go structs for all API responses
 - **Examples**: Extensive examples for all major functionality
@@ -105,6 +107,56 @@ func main() {
         RangeFrom: "2021-01-01", RangeTo: "2021-01-02", ContFlag: "",
     })
     fmt.Println("History:", history)
+}
+```
+
+### Futures Chain & Expired FNO Data
+
+```go
+package main
+
+import (
+    "fmt"
+    fyersgosdk "github.com/FyersDev/fyers-go-sdk"
+)
+
+func main() {
+    fyModel := fyersgosdk.NewFyersModel("AAAAAAAAA-100", "eyjb....")
+
+    // Futures chain for an index or underlying
+    chain, err := fyModel.GetFuturesChain(fyersgosdk.FuturesChainRequest{
+        Symbol: "NSE:NIFTY50-INDEX",
+    })
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
+    fmt.Println("Futures chain:", chain)
+
+    // Expired FNO workflow: expiry dates → contracts → historical candles
+    expiry, err := fyModel.GetExpiryDates(fyersgosdk.ExpiryDatesRequest{
+        UnderlyingSymbol: "NSE:NIFTY50-INDEX",
+        RangeFrom:        "2024-01-01",
+        RangeTo:          "2024-12-31",
+        DateFormat:       "1",
+    })
+    fmt.Println("Expiry dates:", expiry)
+
+    contracts, err := fyModel.GetHistoryUnderlyingSymbols(fyersgosdk.HistoryUnderlyingSymbolsRequest{
+        UnderlyingSymbol: "NSE:NIFTY50-INDEX",
+        ExpiryDate:       "2024-11-28",
+    })
+    fmt.Println("Expired contracts:", contracts)
+
+    history, err := fyModel.GetFNOHistoricalData(fyersgosdk.FNOHistoricalDataRequest{
+        Symbol:     "NSE:NIFTY24NOV22500CE",
+        Resolution: "5",
+        DateFormat: "1",
+        RangeFrom:  "2024-11-01",
+        RangeTo:    "2024-11-28",
+        Greeks:     "1",
+    })
+    fmt.Println("FNO historical data:", history)
 }
 ```
 
@@ -330,6 +382,17 @@ All API methods return `(string, error)`; the string is the raw JSON response. U
 | `GetTradeBook() (string, error)` | Trade book. |
 | `GetTradeBookByTag(tag string) (string, error)` | Trades by tag. |
 
+### Reports (FyersModel)
+
+| Method | Description |
+|--------|-------------|
+| `OrderHistory(req *OrderBookHistoryFilter) (string, error)` | Historical order book with optional filters (exchange, segment, status, symbol, date range, pagination). Pass `nil` for no filters. |
+| `TradeHistory(req *TradeBookHistoryFilter) (string, error)` | Historical trade book with optional filters. Pass `nil` for no filters. |
+| `ChargesHistory(req *ChargesHistoryFilter) (string, error)` | Brokerage and charges history with optional filters. Pass `nil` for no filters. |
+| `RealisedProfit(req *RealisedProfitFilter) (string, error)` | Realised profit/loss report with optional filters. |
+| `TaxPnLHistory(req *TaxPnLHistoryFilter) (string, error)` | Tax P&L report by financial year and segment. |
+| `LedgerHistory(req *LedgerHistoryFilter) (string, error)` | Account ledger entries with optional date range and filters. |
+
 ### Orders (FyersModel)
 
 | Method | Description |
@@ -363,6 +426,20 @@ All API methods return `(string, error)`; the string is the raw JSON response. U
 | `ConvertPosition(req ConvertPositionRequest) (string, error)` | Convert position (e.g. INTRADAY to CNC). |
 | `AttachPositionLegs(req AttachPositionLegsRequest) (string, error)` | Attach/update/remove TP/SL legs on an open position (PATCH). |
 
+### Smart Orders (FyersModel)
+
+| Method | Description |
+|--------|-------------|
+| `CreateSmartOrderLimit(req CreateSmartOrderLimitRequest) (string, error)` | Create a smart limit order. |
+| `CreateSmartOrderStep(req CreateSmartOrderStepRequest) (string, error)` | Create a smart step order. |
+| `CreateSmartOrderSIP(req CreateSmartOrderSIPRequest) (string, error)` | Create a smart SIP order. |
+| `CreateSmartOrderTrail(req CreateSmartOrderTrailRequest) (string, error)` | Create a smart trailing stop-loss order. |
+| `ModifySmartOrder(req ModifySmartOrderRequest) (string, error)` | Modify an existing smart order (PATCH). |
+| `CancelSmartOrder(req FlowIdRequest) (string, error)` | Cancel a smart order (DELETE). |
+| `PauseSmartOrder(req FlowIdRequest) (string, error)` | Pause a smart order (PATCH). |
+| `ResumeSmartOrder(req FlowIdRequest) (string, error)` | Resume a paused smart order (PATCH). |
+| `GetSmartOrderBookWithFilter(req *GetSmartOrderBookFilter) (string, error)` | Smart order book with optional filters. Pass `nil` for no filters. |
+
 ### Market Data (FyersModel)
 
 | Method | Description |
@@ -371,6 +448,15 @@ All API methods return `(string, error)`; the string is the raw JSON response. U
 | `GetStockQuotes(symbols []string) (string, error)` | Quotes for up to 50 symbols. |
 | `GetMarketDepth(req MarketDepthRequest) (string, error)` | Market depth (symbol, ohlcv_flag). |
 | `GetOptionChain(req OptionChainRequest) (string, error)` | Options chain. |
+
+### Futures Chain & Expired FNO (FyersModel)
+
+| Method | Description |
+|--------|-------------|
+| `GetFuturesChain(req FuturesChainRequest) (string, error)` | Futures chain for an underlying symbol (e.g. `NSE:NIFTY50-INDEX`). |
+| `GetExpiryDates(req ExpiryDatesRequest) (string, error)` | Expiry dates for an underlying symbol (expired FNO). |
+| `GetHistoryUnderlyingSymbols(req HistoryUnderlyingSymbolsRequest) (string, error)` | Expired contract symbols for a given underlying and expiry date. |
+| `GetFNOHistoricalData(req FNOHistoricalDataRequest) (string, error)` | OHLCV history for expired FNO contracts. Optional `greeks`. |
 
 ### Screeners (FyersModel)
 
@@ -500,6 +586,14 @@ All runnable examples live in **[examples/fyers/fyers.go](examples/fyers/fyers.g
 - **Get Order Book by Tag** – `GetOrderBookByTag`
 - **Get Positions** – `GetPositions`
 
+### Reports
+- **Order History** – `OrderHistory`
+- **Trade History** – `TradeHistory`
+- **Charges History** – `ChargesHistory`
+- **Realised Profit** – `RealisedProfit`
+- **Tax P&L History** – `TaxPnLHistory`
+- **Ledger History** – `LedgerHistory`
+
 ### Orders
 - **Single Order Placement** – `SingleOrderAction` (supports `takeProfit` / `stopLoss` / `legType` offsets)
 - **Multi Order Placement** – `MultiOrderAction`
@@ -518,19 +612,15 @@ All runnable examples live in **[examples/fyers/fyers.go](examples/fyers/fyers.g
 
 ### Smart Order
 - **Smart Limit** – `CreateSmartOrderLimit`
-- **Smart Trail** – `CreateSmartOrderTrail`
 - **Smart Step** – `CreateSmartOrderStep`
+- **Smart SIP** – `CreateSmartOrderSIP`
+- **Smart Trail** – `CreateSmartOrderTrail`
 - **Modify Smart Order** – `ModifySmartOrder`
 - **Cancel Smart Order** – `CancelSmartOrder`
 - **Pause Smart Order** – `PauseSmartOrder`
 - **Resume Smart Order** – `ResumeSmartOrder`
 - **Smart Order Book** – `GetSmartOrderBookWithFilter`
 
-### Smart Exit
-- **Create Smart Exit** – `CreateSmartExitTrigger`
-- **Get Smart Exit** – `GetSmartExitTrigger`
-- **Update Smart Exit** – `UpdateSmartExitTrigger`
-- **Activate/Deactivate Smart Exit** – `ActivateDeactivateSmartExitTrigger`
 
 ### Trade Operations / Positions
 - **Exit Order** – `ExitPosition`
@@ -539,6 +629,7 @@ All runnable examples live in **[examples/fyers/fyers.go](examples/fyers/fyers.g
 - **Pending Order Cancel** – `CancelPendingOrders`
 - **Convert Position** – `ConvertPosition`
 - **Attach Position TP/SL Legs** – `AttachPositionLegs`
+
 ### Alerts
 - **Create Price Alert** – `CreateAlert`
 - **Get Price Alerts** – `GetAlerts`
@@ -552,6 +643,12 @@ All runnable examples live in **[examples/fyers/fyers.go](examples/fyers/fyers.g
 - **Market depth** – `GetMarketDepth`
 - **Option Chain** – `GetOptionChain`
 - **Get History** – `GetHistory`
+
+### Futures Chain & Expired FNO
+- **Futures Chain** – `GetFuturesChain`
+- **Expiry Dates (Expired FNO)** – `GetExpiryDates`
+- **Underlying Symbols (Expired FNO)** – `GetHistoryUnderlyingSymbols`
+- **FNO Historical Data (Expired)** – `GetFNOHistoricalData`
 
 ### Screeners
 - **Screeners Config** – `ScreenersConfig`

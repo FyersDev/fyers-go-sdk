@@ -61,3 +61,65 @@ func (m *FyersModel) GetOptionChain(req OptionChainRequest) (string, error) {
 	}
 	return string(resp.Body), nil
 }
+
+func (m *FyersModel) GetExpiryDates(req ExpiryDatesRequest) (string, error) {
+	params := url.Values{}
+	params.Set("symbol", req.UnderlyingSymbol)
+	params.Set("range_from", req.RangeFrom)
+	params.Set("range_to", req.RangeTo)
+	params.Set("date_format", req.DateFormat)
+
+	resp, err := m.httpClient.Do(http.MethodGet, ExpiryDatesURL, params, m.authHeader())
+	if err != nil {
+		return "", err
+	}
+	return string(resp.Body), nil
+}
+
+func (m *FyersModel) GetHistoryUnderlyingSymbols(req HistoryUnderlyingSymbolsRequest) (string, error) {
+	params := url.Values{}
+	params.Set("symbol", req.UnderlyingSymbol)
+	params.Set("expiry_date", req.ExpiryDate)
+
+	resp, err := m.httpClient.Do(http.MethodGet, HistoryUnderlyingSymbolsURL, params, m.authHeader())
+	if err != nil {
+		return "", err
+	}
+	return string(resp.Body), nil
+}
+
+func (m *FyersModel) GetFuturesChain(req FuturesChainRequest) (string, error) {
+	if req.Symbol == "" {
+		return "", fmt.Errorf("symbol is required")
+	}
+
+	params := url.Values{}
+	params.Set("symbol", req.Symbol)
+
+	resp, err := m.httpClient.Do(http.MethodGet, FuturesChainURL, params, m.authHeader())
+	if err != nil {
+		return "", err
+	}
+	return string(resp.Body), nil
+}
+
+func (m *FyersModel) GetFNOHistoricalData(req FNOHistoricalDataRequest) (string, error) {
+	params := url.Values{}
+	params.Set("symbol", req.Symbol)
+	params.Set("resolution", req.Resolution)
+	params.Set("date_format", req.DateFormat)
+	params.Set("range_from", req.RangeFrom)
+	params.Set("range_to", req.RangeTo)
+	if req.OiFlag != "" {
+		params.Set("oi_flag", req.OiFlag)
+	}
+	if req.Greeks != "" {
+		params.Set("greeks", req.Greeks)
+	}
+
+	resp, err := m.httpClient.Do(http.MethodGet, FNOHistoricalDataURL, params, m.authHeader())
+	if err != nil {
+		return "", err
+	}
+	return string(resp.Body), nil
+}

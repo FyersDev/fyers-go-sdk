@@ -3,10 +3,8 @@ package main
 // "os"
 // "os/signal"
 // "syscall"
-// "os"
-// "os/signal"
-// "syscall"
 
+// fyersgosdk "github.com/FyersDev/fyers-go-sdk"
 // fyersws "github.com/FyersDev/fyers-go-sdk/websocket"
 
 // Get Auth Code URL

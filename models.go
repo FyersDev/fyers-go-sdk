@@ -921,7 +921,7 @@ type HistoryUnderlyingSymbolsData struct {
 
 type FuturesChainResponse struct {
 	APIResponse
-	Data []FuturesChainItem `json:"d"`
+	Data []FuturesChainItem `json:"data"`
 }
 
 type FuturesChainItem struct {

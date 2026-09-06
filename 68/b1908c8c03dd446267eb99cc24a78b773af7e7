@@ -1,0 +1,24 @@
+examples/fyers/fyers.go
+  s_e510a4063bc033::t_e8b0aa865b23ec 1213-1214,1232-1233,1252-1253,1270-1271,1287-1288
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "68b1908c8c03dd446267eb99cc24a78b773af7e7",
+  "prompts": {},
+  "humans": {
+    "h_e5cd7b20a98a26": {
+      "author": "kishore-fyers <kishorekumar@fyers.in>"
+    }
+  },
+  "sessions": {
+    "s_e510a4063bc033": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b80ed66b-faec-4cad-8533-3681dbd04ced",
+        "model": "claude-opus-5"
+      },
+      "human_author": "kishore-fyers <kishorekumar@fyers.in>"
+    }
+  }
+}

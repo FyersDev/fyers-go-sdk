@@ -1293,7 +1293,8 @@ package main
 // 		DateFormat: "1",
 // 		RangeFrom:  "2024-11-01",
 // 		RangeTo:    "2024-11-28",
-// 		Greeks:     "1",
+// 		IncludeGreeks: "1",
+// 		IncludeOi:     "1",
 // 	})
 // 	if err != nil {
 // 		fmt.Printf("Error getting FNO historical data: %v", err)

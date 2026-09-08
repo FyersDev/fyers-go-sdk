@@ -154,7 +154,8 @@ func main() {
         DateFormat: "1",
         RangeFrom:  "2024-11-01",
         RangeTo:    "2024-11-28",
-        Greeks:     "1",
+        IncludeGreeks: "1",
+        IncludeOi:     "1",
     })
     fmt.Println("FNO historical data:", history)
 }
@@ -456,7 +457,7 @@ All API methods return `(string, error)`; the string is the raw JSON response. U
 | `GetFuturesChain(req FuturesChainRequest) (string, error)` | Futures chain for an underlying symbol (e.g. `NSE:NIFTY50-INDEX`). |
 | `GetExpiryDates(req ExpiryDatesRequest) (string, error)` | Expiry dates for an underlying symbol (expired FNO). |
 | `GetHistoryUnderlyingSymbols(req HistoryUnderlyingSymbolsRequest) (string, error)` | Expired contract symbols for a given underlying and expiry date. |
-| `GetFNOHistoricalData(req FNOHistoricalDataRequest) (string, error)` | OHLCV history for expired FNO contracts. Optional `greeks`. |
+| `GetFNOHistoricalData(req FNOHistoricalDataRequest) (string, error)` | OHLCV history for expired FNO contracts. Optional `include_greeks` / `include_oi`. |
 
 ### Screeners (FyersModel)
 

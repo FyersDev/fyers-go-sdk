@@ -597,13 +597,13 @@ type HistoryRequest struct {
 }
 
 type FNOHistoricalDataRequest struct {
-	Symbol     string `json:"symbol"`
-	Resolution string `json:"resolution"`
-	DateFormat string `json:"date_format"`
-	RangeFrom  string `json:"range_from"`
-	RangeTo    string `json:"range_to"`
-	OiFlag     string `json:"oi_flag,omitempty"`
-	Greeks     string `json:"greeks,omitempty"`
+	Symbol        string `json:"symbol"`
+	Resolution    string `json:"resolution"`
+	DateFormat    string `json:"date_format"`
+	RangeFrom     string `json:"range_from"`
+	RangeTo       string `json:"range_to"`
+	IncludeOi     string `json:"include_oi,omitempty"`
+	IncludeGreeks string `json:"include_greeks,omitempty"`
 }
 
 type HistoryResponse struct {

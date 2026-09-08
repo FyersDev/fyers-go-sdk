@@ -110,11 +110,11 @@ func (m *FyersModel) GetFNOHistoricalData(req FNOHistoricalDataRequest) (string,
 	params.Set("date_format", req.DateFormat)
 	params.Set("range_from", req.RangeFrom)
 	params.Set("range_to", req.RangeTo)
-	if req.OiFlag != "" {
-		params.Set("oi_flag", req.OiFlag)
+	if req.IncludeOi != "" {
+		params.Set("include_oi", req.IncludeOi)
 	}
-	if req.Greeks != "" {
-		params.Set("greeks", req.Greeks)
+	if req.IncludeGreeks != "" {
+		params.Set("include_greeks", req.IncludeGreeks)
 	}
 
 	resp, err := m.httpClient.Do(http.MethodGet, FNOHistoricalDataURL, params, m.authHeader())

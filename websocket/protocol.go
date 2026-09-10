@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"sync"
 )
 
 type Protocol interface {
@@ -36,6 +37,11 @@ type symbolConversion struct {
 	dataLogger      *FyersLogger
 }
 
+var (
+	indexHSMMappingCache map[string]interface{}
+	indexHSMMappingMutex sync.Mutex
+)
+
 func newSymbolConversion(accessToken, dataType, logPath string) *symbolConversion {
 	if strings.Contains(accessToken, ":") {
 		parts := strings.Split(accessToken, ":")
@@ -57,6 +63,43 @@ func newSymbolConversion(accessToken, dataType, logPath string) *symbolConversio
 		symbolsTokenAPI: "https://api-t1.fyers.in/data/symbol-token",
 		dataLogger:      logger,
 	}
+}
+
+// Get index mapping.
+// First call get from public API, falling back to map.json on error.
+// Result is cached in memory for subsequent calls.
+func (sc *symbolConversion) getIndexHSMMapping(
+	fallbackIndexDict map[string]interface{},
+) map[string]interface{} {
+
+	indexHSMMappingMutex.Lock()
+	defer indexHSMMappingMutex.Unlock()
+
+	// Already loaded in memory.
+	if indexHSMMappingCache != nil {
+		sc.dataLogger.Debug(
+			"Index mapping already loaded in memory. Returning cached mapping.",
+		)
+		return indexHSMMappingCache
+	}
+
+	indexDict, err := sc.getIndexDictMapJSON()
+	if err != nil {
+		sc.dataLogger.Exception(err)
+		sc.dataLogger.Debug(
+			"S3 index mapping load failed. Falling back to map.json index_dict.",
+		)
+		// API call failed -> use local map.json.
+		indexHSMMappingCache = fallbackIndexDict
+	} else {
+		sc.dataLogger.Debug(
+			"API index mapping load succeeded. Caching API mapping.",
+		)
+		// API call succeeded -> cache API mapping.
+		indexHSMMappingCache = indexDict
+	}
+
+	return indexHSMMappingCache
 }
 
 func (sc *symbolConversion) symbolToHSMToken(symbols []string) (map[string]string, []string, bool, string) {
@@ -105,7 +148,7 @@ func (sc *symbolConversion) symbolToHSMToken(symbols []string) (map[string]strin
 		return nil, nil, false, ""
 	}
 
-	indexDict := mapData["index_dict"].(map[string]interface{})
+	indexDict := sc.getIndexHSMMapping(mapData["index_dict"].(map[string]interface{}))
 	exchSegDict := mapData["exch_seg_dict"].(map[string]interface{})
 
 	dataDict := make(map[string]string)
@@ -195,6 +238,22 @@ func (sc *symbolConversion) loadMapJSON() (map[string]interface{}, error) {
 	err = json.Unmarshal(data, &mapData)
 	if err != nil {
 		return nil, err
+	}
+
+	return mapData, nil
+}
+
+func (sc *symbolConversion) getIndexDictMapJSON() (map[string]interface{}, error) {
+	resp, err := http.Get(INDEX_HSM_MAPPING_URL)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get index HSM mapping JSON: %w", err)
+	}
+	defer resp.Body.Close()
+
+	data, err := io.ReadAll(resp.Body)
+	var mapData map[string]interface{}
+	if err := json.Unmarshal(data, &mapData); err != nil {
+		return nil, fmt.Errorf("failed to parse index HSM mapping JSON: %w", err)
 	}
 
 	return mapData, nil

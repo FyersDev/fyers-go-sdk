@@ -41,4 +41,6 @@ const (
 	FULL_MODE_TYPE = "ful"
 	CH_PAUSE_TYPE  = "cp"
 	CH_RESUME_TYPE = "cr"
+
+	INDEX_HSM_MAPPING_URL = "https://public.fyers.in/sym_details/index_hsm_mapping.json"
 )

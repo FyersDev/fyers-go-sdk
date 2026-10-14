@@ -395,10 +395,11 @@ func (f *FyersDataSocket) AccessTokenToHSMToken() bool {
 		}
 	}
 
-	if hsmKey, exists := payload["hsm_key"]; exists {
-		f.hsmToken = hsmKey.(string)
-		return true
-	}
+	// if hsmKey, exists := payload["hsm_key"]; exists {
+	// 	f.hsmToken = hsmKey.(string)
+	// 	return true
+	// }
+	f.hsmToken = f.accessToken
 
 	fmt.Printf("hsm_key not found in token payload\n")
 	if f.OnError != nil {

@@ -1,0 +1,27 @@
+websocket/data_ws.go
+  s_f77279e71cae9f::t_976e53cef02fa4 1591-1594,1597
+  s_f77279e71cae9f::t_9f3662856d3589 731-734,738
+  s_f77279e71cae9f::t_0ebae684f1641a 683-686,690
+  s_f77279e71cae9f::t_93a859edcb9cf6 773-776,780
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3342d7b4b1e65254c6b70c86da1bfb930b54c8a2",
+  "prompts": {},
+  "humans": {
+    "h_e5cd7b20a98a26": {
+      "author": "kishore-fyers <kishorekumar@fyers.in>"
+    }
+  },
+  "sessions": {
+    "s_f77279e71cae9f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "afa61f16-df33-48f4-9b04-70ce065fb54b",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": null
+    }
+  }
+}

@@ -680,14 +680,10 @@ func (f *FyersDataSocket) handleAuthResponse(data []byte) {
 		}
 	} else {
 		if f.OnError != nil {
-			message := AUTH_FAIL
-			if stringVal != "" {
-				message = stringVal
-			}
 			f.OnError(DataError{
 				"type":    AUTH_TYPE,
 				"code":    AUTH_ERROR_CODE,
-				"message": message,
+				"message": AUTH_FAIL,
 				"s":       ERROR,
 			})
 		}
@@ -728,14 +724,10 @@ func (f *FyersDataSocket) handleSubscribeResponse(data []byte) {
 		}
 	} else {
 		if f.OnError != nil {
-			message := SUBSCRIBE_FAIL
-			if stringVal != "" {
-				message = stringVal
-			}
 			f.OnError(DataError{
 				"type":    SUBS_TYPE,
 				"code":    SUBS_ERROR_CODE,
-				"message": message,
+				"message": SUBSCRIBE_FAIL,
 				"s":       ERROR,
 			})
 		}
@@ -770,14 +762,10 @@ func (f *FyersDataSocket) handleUnsubscribeResponse(data []byte) {
 		}
 	} else {
 		if f.OnError != nil {
-			message := UNSUBSCRIBE_FAIL
-			if stringVal != "" {
-				message = stringVal
-			}
 			f.OnError(DataError{
 				"type":    UNSUBS_TYPE,
 				"code":    UNSUBS_ERROR_CODE,
-				"message": message,
+				"message": UNSUBSCRIBE_FAIL,
 				"s":       ERROR,
 			})
 		}
@@ -1588,13 +1576,9 @@ func (f *FyersDataSocket) handleLiteFullModeResponse(data []byte) {
 				}
 			} else {
 				if f.OnError != nil {
-					message := MODE_CHANGE_ERROR
-					if stringVal != "" {
-						message = stringVal
-					}
 					f.OnError(DataError{
 						"code":    MODE_ERROR_CODE,
-						"message": message,
+						"message": MODE_CHANGE_ERROR,
 						"s":       ERROR,
 					})
 				}

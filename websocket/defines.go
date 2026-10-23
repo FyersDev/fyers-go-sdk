@@ -34,11 +34,15 @@ const (
 	MAX_RECONNECT_ATTEMPTS_REACHED = "Max reconnect attempts reached"
 	INDEX_DEPTH_ERROR_MESSAGE      = "Index does not have market depth"
 
-	AUTH_TYPE      = "cn"
-	SUBS_TYPE      = "sub"
-	UNSUBS_TYPE    = "unsub"
-	LITE_MODE_TYPE = "lit"
-	FULL_MODE_TYPE = "ful"
-	CH_PAUSE_TYPE  = "cp"
-	CH_RESUME_TYPE = "cr"
+	AUTH_TYPE       = "cn"
+	SUBS_TYPE       = "sub"
+	UNSUBS_TYPE     = "unsub"
+	LITE_MODE_TYPE  = "lit"
+	FULL_MODE_TYPE  = "ful"
+	CH_PAUSE_TYPE   = "cp"
+	CH_RESUME_TYPE  = "cr"
+	CUSTOM_MSG_TYPE = "msg"
+
+	CUSTOM_MSG_RESP_TYPE       = 51
+	SYMBOL_LIMIT_EXCEEDED_CODE = 51001
 )

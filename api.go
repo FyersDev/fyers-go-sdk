@@ -31,6 +31,7 @@ const (
 	MarketStatusURL             = BaseDataURL + "/marketStatus"
 	StockHistoryURL             = BaseDataURL + "/history?"
 	StockQuotesURL              = BaseDataURL + "/quotes?symbols="
+	StockQuotesV2URL            = BaseDataURL + "/quotes"
 	OptionChainURl              = BaseDataURL + "/options-chain-v3?"
 	AlertsURL                   = BaseURL + "/price-alert"
 	ToggleAlertURL              = BaseURL + "/toggle-alert"

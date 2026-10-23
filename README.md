@@ -279,7 +279,7 @@ func main() {
 		true,        // Lite mode disabled. Set to true if you want a lite response
 		false,       // Save response in a log file instead of printing it
 		true,        // Enable auto-reconnection to WebSocket on disconnection
-		50,          // reconnectRetry: max reconnect attempts (same as Python default; cap 50)
+		50,          // reconnectRetry: max reconnect attempts (cap 50)
 		onConnect,   // Callback: subscribe on every connect (first + after reconnect)
 		onClose,     // Callback function to handle WebSocket connection close events
 		onError,     // Callback function to handle WebSocket errors
@@ -508,7 +508,7 @@ dataSocket = fyersws.NewFyersDataSocket(
     true,        // Lite mode disabled. Set to true if you want a lite response
     false,       // Save response in a log file instead of printing it
     true,        // Enable auto-reconnection to WebSocket on disconnection
-    50,          // reconnectRetry: max reconnect attempts (same as Python default; cap 50)
+    50,          // reconnectRetry: max reconnect attempts (cap 50)
     onConnect,   // Callback: subscribe on every connect (first + after reconnect)
     onClose,     // Callback function to handle WebSocket connection close events
     onError,     // Callback function to handle WebSocket errors

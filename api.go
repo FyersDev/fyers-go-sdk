@@ -2,6 +2,7 @@ package fyersgosdk
 
 const (
 	BaseURL      = "https://api-t1.fyers.in/api/v3"
+	ScreenersURL = ""
 	BaseDataURL  = "https://api-t1.fyers.in/data"
 	Websocket    = "wss://socket.fyers.in/trade/v3"
 	HSMWebsocket = "socket.fyers.in/hsm/v1-5/prod"
@@ -52,10 +53,10 @@ const (
 	RealisedProfitURL           = BaseURL + "/realised-pnl-history"
 	TaxPnLHistoryURL            = BaseURL + "/tax-pnl-history"
 	LedgerHistoryURL            = BaseURL + "/ledger-history"
-	ScreenersConfigURL          = BaseURL + "/screeners/config"
-	ScreenersQueryURL           = BaseURL + "/screeners/query"
-	ScreenersCandlestickURL     = BaseURL + "/screeners/candlestick"
-	ScreenersTechnicalURL       = BaseURL + "/screeners/technical"
+	ScreenersConfigURL          = ScreenersURL + "/screeners/config"
+	ScreenersStandardURL        = ScreenersURL + "/screeners/standard"
+	ScreenersCandlestickURL     = ScreenersURL + "/screeners/candlestick"
+	ScreenersTechnicalURL       = ScreenersURL + "/screeners/technical"
 	ExpiryDatesURL              = BaseDataURL + "/history/fno/expired/expiry-dates"
 	HistoryUnderlyingSymbolsURL = BaseDataURL + "/history/fno/expired/underlying-symbols"
 	FuturesChainURL             = BaseDataURL + "/futures-chain"

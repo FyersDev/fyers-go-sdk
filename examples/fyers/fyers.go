@@ -1339,3 +1339,260 @@ package main
 // 	} else {
 // 		fmt.Println("Attach position legs: ", response)
 // 	}
+// }
+
+// Screeners
+// Start with the config: it lists every screener with the params, universes,
+// columns, timeframes and expiries that screener accepts.
+
+// Screeners config - no params
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.ScreenersConfig()
+// 	if err != nil {
+// 		fmt.Printf("Error screeners config: %v", err)
+// 	} else {
+// 		fmt.Println("Screeners config: ", response)
+// 	}
+// }
+
+// Standard screener - only ScreenerId, so the screener's own default universe,
+// timeframe and sort are applied
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.ScreenersStandard(&fyersgosdk.ScreenersStandard{
+// 		ScreenerId: "top_gainers",
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error screeners standard: %v", err)
+// 	} else {
+// 		fmt.Println("Screeners standard: ", response)
+// 	}
+// }
+
+// Standard screener - pick the columns. Comma separated ids from the screener's
+// column group, max 10
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.ScreenersStandard(&fyersgosdk.ScreenersStandard{
+// 		ScreenerId: "top_gainers",
+// 		Fields:     "t0_close_ltp,t0_per_change,t0_volume",
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error screeners standard: %v", err)
+// 	} else {
+// 		fmt.Println("Screeners standard: ", response)
+// 	}
+// }
+
+// Standard screener - a universe from the screener's universe group.
+// Eg: iw001 is Nifty 50
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.ScreenersStandard(&fyersgosdk.ScreenersStandard{
+// 		ScreenerId: "top_gainers",
+// 		Universe:   "iw001",
+// 		Fields:     "t0_close_ltp",
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error screeners standard: %v", err)
+// 	} else {
+// 		fmt.Println("Screeners standard: ", response)
+// 	}
+// }
+
+// Standard screener - sorting. OrderBy is any column in the group,
+// Order is asc or desc
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.ScreenersStandard(&fyersgosdk.ScreenersStandard{
+// 		ScreenerId: "top_gainers",
+// 		Fields:     "t0_volume",
+// 		OrderBy:    "t0_volume",
+// 		Order:      "desc",
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error screeners standard: %v", err)
+// 	} else {
+// 		fmt.Println("Screeners standard: ", response)
+// 	}
+// }
+
+// Standard screener - a timeframe from the screener's allowed_timeframes.
+// If you send a timeframe and no OrderBy, the sort follows that timeframe
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.ScreenersStandard(&fyersgosdk.ScreenersStandard{
+// 		ScreenerId: "top_gainers",
+// 		Timeframe:  "c52_week",
+// 		Fields:     "c52_week_per_change",
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error screeners standard: %v", err)
+// 	} else {
+// 		fmt.Println("Screeners standard: ", response)
+// 	}
+// }
+
+// Standard screener - fundamental columns on a fundamentals screener
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.ScreenersStandard(&fyersgosdk.ScreenersStandard{
+// 		ScreenerId: "undervalued_stocks",
+// 		Fields:     "pe_ratio,yearly_dividend_per_share,market_cap",
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error screeners standard: %v", err)
+// 	} else {
+// 		fmt.Println("Screeners standard: ", response)
+// 	}
+// }
+
+// Standard screener - futures screener with a futures universe
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.ScreenersStandard(&fyersgosdk.ScreenersStandard{
+// 		ScreenerId: "fut_oi_gainers",
+// 		Universe:   "fw002",
+// 		Fields:     "oi,oi_per_change",
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error screeners standard: %v", err)
+// 	} else {
+// 		fmt.Println("Screeners standard: ", response)
+// 	}
+// }
+
+// Standard screener - options. OptionType is CE or PE, leave it empty for both
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.ScreenersStandard(&fyersgosdk.ScreenersStandard{
+// 		ScreenerId: "top_oi_gainers",
+// 		OptionType: "CE",
+// 		Fields:     "oi,oi_per_change",
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error screeners standard: %v", err)
+// 	} else {
+// 		fmt.Println("Screeners standard: ", response)
+// 	}
+// }
+
+// Standard screener - one expiry. Send the epoch from ScreenersConfig
+// data.expiries[universe]. Expiry "0" means all expiries
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.ScreenersStandard(&fyersgosdk.ScreenersStandard{
+// 		ScreenerId: "top_oi_gainers",
+// 		Universe:   "ow001",
+// 		Expiry:     "1793095800",
+// 		OptionType: "PE",
+// 		Fields:     "oi,oi_per_change",
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error screeners standard: %v", err)
+// 	} else {
+// 		fmt.Println("Screeners standard: ", response)
+// 	}
+// }
+
+// Standard screener - commodity and ETF screeners use their own universes
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.ScreenersStandard(&fyersgosdk.ScreenersStandard{
+// 		ScreenerId: "commodity_gainers",
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error screeners standard: %v", err)
+// 	} else {
+// 		fmt.Println("Screeners standard: ", response)
+// 	}
+// }
+
+// Technical screener - takes the screener id only. The columns are fixed per
+// screener. Use an id from ScreenersConfig data.screeners_technical
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.ScreenersTechnical(&fyersgosdk.ScreenersTechnical{
+// 		ScreenerId: "mfi_overbought",
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error screeners technical: %v", err)
+// 	} else {
+// 		fmt.Println("Screeners technical: ", response)
+// 	}
+// }
+
+// Candlestick screener - takes the screener id only. The columns are fixed per
+// screener. Use an id from ScreenersConfig data.screeners_candlestick
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.ScreenersCandlestick(&fyersgosdk.ScreenersCandlestick{
+// 		ScreenerId: "hammer",
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error screeners candlestick: %v", err)
+// 	} else {
+// 		fmt.Println("Screeners candlestick: ", response)
+// 	}
+// }
+
+// Error handling - the API rejects a bad request with the body
+// {"code": -50, "message": "<reason>", "s": "error", "data": null}
+// and the message says exactly what was wrong. The response is returned as a
+// string, so unmarshal it and check "s" before reading "data".
+// 'oi' is not in the equity column group, so this one is rejected.
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// 	response, err := fyModel.ScreenersStandard(&fyersgosdk.ScreenersStandard{
+// 		ScreenerId: "top_gainers",
+// 		Fields:     "oi",
+// 	})
+// 	if err != nil {
+// 		fmt.Printf("Error screeners standard: %v", err)
+// 	} else {
+// 		fmt.Println("Screeners standard: ", response)
+// 	}
+// }

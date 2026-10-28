@@ -1,0 +1,33 @@
+api.go
+  h_e5cd7b20a98a26 5
+  h_e5cd7b20a98a26 56-59
+README.md
+  s_7433c44e7ce670::t_6a4d8143dcb3f5 467-469,656
+examples/fyers/fyers.go
+  s_7433c44e7ce670::t_81fd14cd253464 1341-1598
+models.go
+  s_7433c44e7ce670::t_a7e7bf031148a5 862-874,878,882
+screeners.go
+  s_7433c44e7ce670::t_1f5c0f9c71fd79 21,24-31,35,48,65,78-86
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "8e0948cb33f92d40d15b0f7f7238af6b717988c8",
+  "prompts": {},
+  "humans": {
+    "h_e5cd7b20a98a26": {
+      "author": "kishore-fyers <kishorekumar@fyers.in>"
+    }
+  },
+  "sessions": {
+    "s_7433c44e7ce670": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d0ee291e-4b41-4f1d-a8f1-73ac6036a112",
+        "model": "claude-opus-5"
+      },
+      "human_author": "kishore-fyers <kishorekumar@fyers.in>"
+    }
+  }
+}

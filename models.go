@@ -859,20 +859,27 @@ type LedgerHistoryFilter struct {
 	Segment         []string `json:"segment_type,omitempty"`
 }
 
-type ScreenersQuery struct {
-	Screener string `json:"screener"`
-	Universe string `json:"universe"`
-	Fields   string `json:"fields"`
-	OrderBy  string `json:"order_by"`
-	Order    string `json:"order"`
+// ScreenersStandard holds the params of a standard screener request. ScreenerId
+// is required; the rest are optional and only the ones listed in that screener's
+// supported_params are accepted. Leave a field empty and the server applies the
+// screener's own default.
+type ScreenersStandard struct {
+	ScreenerId string `json:"screener_id"`
+	Universe   string `json:"universe"`
+	Fields     string `json:"fields"`
+	OrderBy    string `json:"order_by"`
+	Order      string `json:"order"`
+	Timeframe  string `json:"timeframe"`
+	Expiry     string `json:"expiry"`
+	OptionType string `json:"option_type"`
 }
 
 type ScreenersCandlestick struct {
-	Screener string `json:"screener"`
+	ScreenerId string `json:"screener_id"`
 }
 
 type ScreenersTechnical struct {
-	Screener string `json:"screener"`
+	ScreenerId string `json:"screener_id"`
 }
 
 type ExpiryDatesRequest struct {

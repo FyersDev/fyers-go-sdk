@@ -279,7 +279,7 @@ func main() {
 		true,        // Lite mode disabled. Set to true if you want a lite response
 		false,       // Save response in a log file instead of printing it
 		true,        // Enable auto-reconnection to WebSocket on disconnection
-		50,          // reconnectRetry: max reconnect attempts (same as Python default; cap 50)
+		50,          // reconnectRetry: max reconnect attempts (cap 50)
 		onConnect,   // Callback: subscribe on every connect (first + after reconnect)
 		onClose,     // Callback function to handle WebSocket connection close events
 		onError,     // Callback function to handle WebSocket errors
@@ -464,9 +464,9 @@ All API methods return `(string, error)`; the string is the raw JSON response. U
 | Method | Description |
 |--------|-------------|
 | `ScreenersConfig() (string, error)` | Screener configuration (available universes, fields, candlestick patterns, technical indicators). |
-| `ScreenersQuery(req *ScreenersQuery) (string, error)` | Custom query screener (`screener`, `universe`, `fields`, `order_by`, `order`). Pass `nil` for no filters. |
-| `ScreenersCandlestick(req *ScreenersCandlestick) (string, error)` | Candlestick pattern screener (`screener`). Pass `nil` for no filters. |
-| `ScreenersTechnical(req *ScreenersTechnical) (string, error)` | Technical indicator screener (`screener`). Pass `nil` for no filters. |
+| `ScreenersStandard(req *ScreenersStandard) (string, error)` | Standard screener. `ScreenerId` is required; `Universe`, `Fields`, `OrderBy`, `Order`, `Timeframe`, `Expiry` and `OptionType` are optional and only the ones listed in that screener's `supported_params` are accepted. Empty fields are not sent, so the server applies the screener's own defaults. |
+| `ScreenersCandlestick(req *ScreenersCandlestick) (string, error)` | Candlestick pattern screener (`ScreenerId` only). |
+| `ScreenersTechnical(req *ScreenersTechnical) (string, error)` | Technical indicator screener (`ScreenerId` only). |
 
 ### Broker (FyersModel)
 
@@ -508,7 +508,7 @@ dataSocket = fyersws.NewFyersDataSocket(
     true,        // Lite mode disabled. Set to true if you want a lite response
     false,       // Save response in a log file instead of printing it
     true,        // Enable auto-reconnection to WebSocket on disconnection
-    50,          // reconnectRetry: max reconnect attempts (same as Python default; cap 50)
+    50,          // reconnectRetry: max reconnect attempts (cap 50)
     onConnect,   // Callback: subscribe on every connect (first + after reconnect)
     onClose,     // Callback function to handle WebSocket connection close events
     onError,     // Callback function to handle WebSocket errors
@@ -653,7 +653,7 @@ All runnable examples live in **[examples/fyers/fyers.go](examples/fyers/fyers.g
 
 ### Screeners
 - **Screeners Config** – `ScreenersConfig`
-- **Screeners Query** – `ScreenersQuery`
+- **Screeners Standard** – `ScreenersStandard`
 - **Screeners Candlestick** – `ScreenersCandlestick`
 - **Screeners Technical** – `ScreenersTechnical`
 

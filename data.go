@@ -1,6 +1,7 @@
 package fyersgosdk
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -30,6 +31,25 @@ func (m *FyersModel) GetStockQuotes(symbols []string) (string, error) {
 
 	params := url.Values{"symbols": {strings.Join(symbols, ",")}}
 	resp, err := m.httpClient.Do(http.MethodGet, StockQuotesURL, params, m.authHeader())
+	if err != nil {
+		return "", err
+	}
+	return string(resp.Body), nil
+}
+
+func (m *FyersModel) GetStockQuotesV2(symbols []string) (string, error) {
+	if len(symbols) == 0 {
+		return "", fmt.Errorf("at least one symbol required")
+	}
+
+	body, err := json.Marshal(map[string][]string{"symbols": symbols})
+	if err != nil {
+		return "", fmt.Errorf("marshal symbols: %w", err)
+	}
+
+	headers := m.authHeader()
+	headers.Set("Content-Type", "application/json")
+	resp, err := m.httpClient.DoRaw(http.MethodPost, StockQuotesV2URL, body, headers)
 	if err != nil {
 		return "", err
 	}

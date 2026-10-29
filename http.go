@@ -3,7 +3,6 @@ package fyersgosdk
 import (
 	"bytes"
 	"io"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
@@ -73,6 +72,7 @@ func (h *httpClient) DoRaw(method, rURL string, reqBody []byte, headers http.Hea
 	req, err := http.NewRequest(method, rURL, postBody)
 	if err != nil {
 		h.hLog.Printf("Request preparation failed: %v", err)
+		return resp, err
 	}
 
 	if headers != nil {
@@ -92,13 +92,16 @@ func (h *httpClient) DoRaw(method, rURL string, reqBody []byte, headers http.Hea
 	r, err := h.client.Do(req)
 	if err != nil {
 		h.hLog.Printf("Request failed: %v", err)
+		return resp, err
 	}
 
 	defer r.Body.Close()
 
-	body, err := ioutil.ReadAll(r.Body)
+	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		h.hLog.Printf("Unable to read response: %v", err)
+		resp.Response = r
+		return resp, err
 	}
 
 	resp.Response = r

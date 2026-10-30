@@ -1,6 +1,6 @@
 <a href="https://fyers.in/"><img src="https://assets.fyers.in/images/logo.svg" align="right" /></a>
 
-# Fyers Go SDK : fyers-api-v3 - v1.6.0
+# Fyers Go SDK : fyers-api-v3 - v1.7.0
 
 The official Fyers Go SDK for API-V3 Users [FYERS API](https://fyers.in/products/api/).
 
@@ -100,6 +100,11 @@ func main() {
     symbols := []string{"NSE:SBIN-EQ", "NSE:NIFTY50-INDEX"} // Quotes (up to 50 symbols)
     quotes, err := fyModel.GetStockQuotes(symbols)
     fmt.Println("Quotes:", quotes)
+
+    // Quotes via POST - same shape, but symbols travel in the body so you can
+    // request many more of them in one call.
+    quotesV2, err := fyModel.GetStockQuotesV2(symbols)
+    fmt.Println("Quotes (v2):", quotesV2)
 
     // History
     history, err := fyModel.GetHistory(fyersgosdk.HistoryRequest{
@@ -279,7 +284,7 @@ func main() {
 		true,        // Lite mode disabled. Set to true if you want a lite response
 		false,       // Save response in a log file instead of printing it
 		true,        // Enable auto-reconnection to WebSocket on disconnection
-		50,          // reconnectRetry: max reconnect attempts (same as Python default; cap 50)
+		50,          // reconnectRetry: max reconnect attempts (cap 50)
 		onConnect,   // Callback: subscribe on every connect (first + after reconnect)
 		onClose,     // Callback function to handle WebSocket connection close events
 		onError,     // Callback function to handle WebSocket errors
@@ -446,7 +451,8 @@ All API methods return `(string, error)`; the string is the raw JSON response. U
 | Method | Description |
 |--------|-------------|
 | `GetHistory(req HistoryRequest) (string, error)` | OHLCV history (symbol, resolution, range). |
-| `GetStockQuotes(symbols []string) (string, error)` | Quotes for up to 50 symbols. |
+| `GetStockQuotes(symbols []string) (string, error)` | Quotes via GET; symbols go in the query string, so up to 50 symbols. |
+| `GetStockQuotesV2(symbols []string) (string, error)` | Quotes via POST; symbols go in the request body, which allows many more symbols per request. |
 | `GetMarketDepth(req MarketDepthRequest) (string, error)` | Market depth (symbol, ohlcv_flag). |
 | `GetOptionChain(req OptionChainRequest) (string, error)` | Options chain. |
 
@@ -464,9 +470,9 @@ All API methods return `(string, error)`; the string is the raw JSON response. U
 | Method | Description |
 |--------|-------------|
 | `ScreenersConfig() (string, error)` | Screener configuration (available universes, fields, candlestick patterns, technical indicators). |
-| `ScreenersQuery(req *ScreenersQuery) (string, error)` | Custom query screener (`screener`, `universe`, `fields`, `order_by`, `order`). Pass `nil` for no filters. |
-| `ScreenersCandlestick(req *ScreenersCandlestick) (string, error)` | Candlestick pattern screener (`screener`). Pass `nil` for no filters. |
-| `ScreenersTechnical(req *ScreenersTechnical) (string, error)` | Technical indicator screener (`screener`). Pass `nil` for no filters. |
+| `ScreenersStandard(req *ScreenersStandard) (string, error)` | Standard screener. `ScreenerId` is required; `Universe`, `Fields`, `OrderBy`, `Order`, `Timeframe`, `Expiry` and `OptionType` are optional and only the ones listed in that screener's `supported_params` are accepted. Empty fields are not sent, so the server applies the screener's own defaults. |
+| `ScreenersCandlestick(req *ScreenersCandlestick) (string, error)` | Candlestick pattern screener (`ScreenerId` only). |
+| `ScreenersTechnical(req *ScreenersTechnical) (string, error)` | Technical indicator screener (`ScreenerId` only). |
 
 ### Broker (FyersModel)
 
@@ -508,7 +514,7 @@ dataSocket = fyersws.NewFyersDataSocket(
     true,        // Lite mode disabled. Set to true if you want a lite response
     false,       // Save response in a log file instead of printing it
     true,        // Enable auto-reconnection to WebSocket on disconnection
-    50,          // reconnectRetry: max reconnect attempts (same as Python default; cap 50)
+    50,          // reconnectRetry: max reconnect attempts (cap 50)
     onConnect,   // Callback: subscribe on every connect (first + after reconnect)
     onClose,     // Callback function to handle WebSocket connection close events
     onError,     // Callback function to handle WebSocket errors
@@ -640,7 +646,7 @@ All runnable examples live in **[examples/fyers/fyers.go](examples/fyers/fyers.g
 
 ### Market Data & Broker
 - **Market Status** – `GetMarketStatus`
-- **Quotes** – `GetStockQuotes`
+- **Quotes** – `GetStockQuotes` (GET), `GetStockQuotesV2` (POST)
 - **Market depth** – `GetMarketDepth`
 - **Option Chain** – `GetOptionChain`
 - **Get History** – `GetHistory`
@@ -653,7 +659,7 @@ All runnable examples live in **[examples/fyers/fyers.go](examples/fyers/fyers.g
 
 ### Screeners
 - **Screeners Config** – `ScreenersConfig`
-- **Screeners Query** – `ScreenersQuery`
+- **Screeners Standard** – `ScreenersStandard`
 - **Screeners Candlestick** – `ScreenersCandlestick`
 - **Screeners Technical** – `ScreenersTechnical`
 

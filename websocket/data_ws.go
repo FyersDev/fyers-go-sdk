@@ -641,8 +641,93 @@ func (f *FyersDataSocket) handleMessage(message []byte) {
 		f.handleResumePauseResponse(message, int(respType))
 	case 12:
 		f.handleLiteFullModeResponse(message)
+	case CUSTOM_MSG_RESP_TYPE:
+		f.handleCustomMessage(message)
 	default:
 
+	}
+}
+
+// refTypeToType maps a custom message's refType (the wire response type of the
+// related request) to the SDK's "type" string. Unmapped values fall back to
+// CUSTOM_MSG_TYPE.
+var refTypeToType = map[byte]string{
+	1: AUTH_TYPE,
+	4: SUBS_TYPE,
+	5: UNSUBS_TYPE,
+	7: CH_PAUSE_TYPE,
+	8: CH_RESUME_TYPE,
+}
+
+// customMessage is a decoded HSM custom message frame (response type 51).
+type customMessage struct {
+	Code    int32
+	Message string
+	RefType byte
+}
+
+// parseCustomMessage decodes an HSM custom message frame (response type 51).
+//
+// Layout: [packetLen:2][respType:1][fieldCount:1] then, per field,
+// [fieldID:1][fieldLen:2][value:fieldLen]. Field 1 is the code (int32),
+// field 2 the message (UTF-8) and field 3 the refType. Unknown field ids are
+// skipped for forward compatibility.
+func parseCustomMessage(data []byte) (customMessage, error) {
+	var out customMessage
+	if len(data) < 4 || data[2] != CUSTOM_MSG_RESP_TYPE {
+		return out, fmt.Errorf("not a custom message frame")
+	}
+	end := 2 + int(binary.BigEndian.Uint16(data[0:2]))
+	if end > len(data) {
+		return out, fmt.Errorf("truncated frame")
+	}
+	offset := 4
+	for i := 0; i < int(data[3]); i++ {
+		if offset+3 > end {
+			return out, fmt.Errorf("truncated field header")
+		}
+		fieldID := data[offset]
+		fieldLength := int(binary.BigEndian.Uint16(data[offset+1 : offset+3]))
+		offset += 3
+		if offset+fieldLength > end {
+			return out, fmt.Errorf("truncated field value")
+		}
+		value := data[offset : offset+fieldLength]
+		offset += fieldLength
+
+		switch {
+		case fieldID == 1 && fieldLength == 4:
+			out.Code = int32(binary.BigEndian.Uint32(value))
+		case fieldID == 2:
+			out.Message = string(value)
+		case fieldID == 3 && fieldLength == 1:
+			out.RefType = value[0]
+		}
+	}
+	return out, nil
+}
+
+// handleCustomMessage decodes a custom message (response type 51) and delivers
+// it to OnError, preserving the server-provided code and message. A malformed
+// frame is dropped, consistent with the other response handlers.
+func (f *FyersDataSocket) handleCustomMessage(data []byte) {
+	msg, err := parseCustomMessage(data)
+	if err != nil {
+		return
+	}
+
+	msgType, ok := refTypeToType[msg.RefType]
+	if !ok {
+		msgType = CUSTOM_MSG_TYPE
+	}
+
+	if f.OnError != nil {
+		f.OnError(DataError{
+			"type":    msgType,
+			"code":    int(msg.Code),
+			"message": msg.Message,
+			"s":       ERROR,
+		})
 	}
 }
 

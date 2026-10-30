@@ -1,0 +1,19 @@
+api.go
+  s_0ddf49e4e647c9::t_30824b3fcc7c7f 55-58
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f7ae9bac1bd9e7a58d31793bf945ffa49433d114",
+  "prompts": {},
+  "sessions": {
+    "s_0ddf49e4e647c9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "96557881-8efb-49a8-8dab-8b20b3cf1c73",
+        "model": "claude-opus-5"
+      },
+      "human_author": "kishore-fyers <kishorekumar@fyers.in>"
+    }
+  }
+}

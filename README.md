@@ -101,6 +101,11 @@ func main() {
     quotes, err := fyModel.GetStockQuotes(symbols)
     fmt.Println("Quotes:", quotes)
 
+    // Quotes via POST - same shape, but symbols travel in the body so you can
+    // request many more of them in one call.
+    quotesV2, err := fyModel.GetStockQuotesV2(symbols)
+    fmt.Println("Quotes (v2):", quotesV2)
+
     // History
     history, err := fyModel.GetHistory(fyersgosdk.HistoryRequest{
         Symbol: "NSE:SBIN-EQ", Resolution: "30", DateFormat: "1",
@@ -446,7 +451,8 @@ All API methods return `(string, error)`; the string is the raw JSON response. U
 | Method | Description |
 |--------|-------------|
 | `GetHistory(req HistoryRequest) (string, error)` | OHLCV history (symbol, resolution, range). |
-| `GetStockQuotes(symbols []string) (string, error)` | Quotes for up to 50 symbols. |
+| `GetStockQuotes(symbols []string) (string, error)` | Quotes via GET; symbols go in the query string, so up to 50 symbols. |
+| `GetStockQuotesV2(symbols []string) (string, error)` | Quotes via POST; symbols go in the request body, which allows many more symbols per request. |
 | `GetMarketDepth(req MarketDepthRequest) (string, error)` | Market depth (symbol, ohlcv_flag). |
 | `GetOptionChain(req OptionChainRequest) (string, error)` | Options chain. |
 
@@ -640,7 +646,7 @@ All runnable examples live in **[examples/fyers/fyers.go](examples/fyers/fyers.g
 
 ### Market Data & Broker
 - **Market Status** – `GetMarketStatus`
-- **Quotes** – `GetStockQuotes`
+- **Quotes** – `GetStockQuotes` (GET), `GetStockQuotesV2` (POST)
 - **Market depth** – `GetMarketDepth`
 - **Option Chain** – `GetOptionChain`
 - **Get History** – `GetHistory`

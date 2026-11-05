@@ -25,7 +25,7 @@ func DataSocket(fyModel *FyersModel, webSocketRequest DataSocketRequest) (map[st
 		webSocketRequest.LiteMode, // Lite mode disabled. Set to true if you want a lite response
 		false,                     // Save response in a log file instead of printing it
 		true,                      // Enable auto-reconnection to WebSocket on disconnection
-		50,                        // reconnectRetry: max reconnect attempts (same as Python default; cap 50)
+		50,                        // reconnectRetry: max reconnect attempts (cap 50)
 		onDataConnect,             // Callback: subscribe on every connect (first + after reconnect)
 		onDataClose,               // Callback function to handle WebSocket connection close events
 		onDataError,               // Callback function to handle WebSocket errors

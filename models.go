@@ -596,6 +596,16 @@ type HistoryRequest struct {
 	ContFlag   string `json:"cont_flag,omitempty"`
 }
 
+type FNOHistoricalDataRequest struct {
+	Symbol        string `json:"symbol"`
+	Resolution    string `json:"resolution"`
+	DateFormat    string `json:"date_format"`
+	RangeFrom     string `json:"range_from"`
+	RangeTo       string `json:"range_to"`
+	IncludeOi     string `json:"include_oi,omitempty"`
+	IncludeGreeks string `json:"include_greeks,omitempty"`
+}
+
 type HistoryResponse struct {
 	APIResponse
 	Candles [][]interface{} `json:"candles"`
@@ -849,18 +859,86 @@ type LedgerHistoryFilter struct {
 	Segment         []string `json:"segment_type,omitempty"`
 }
 
-type ScreenersQuery struct {
-	Screener string `json:"screener"`
-	Universe string `json:"universe"`
-	Fields   string `json:"fields"`
-	OrderBy  string `json:"order_by"`
-	Order    string `json:"order"`
+// ScreenersStandard holds the params of a standard screener request. ScreenerId
+// is required; the rest are optional and only the ones listed in that screener's
+// supported_params are accepted. Leave a field empty and the server applies the
+// screener's own default.
+type ScreenersStandard struct {
+	ScreenerId string `json:"screener_id"`
+	Universe   string `json:"universe"`
+	Fields     string `json:"fields"`
+	OrderBy    string `json:"order_by"`
+	Order      string `json:"order"`
+	Timeframe  string `json:"timeframe"`
+	Expiry     string `json:"expiry"`
+	OptionType string `json:"option_type"`
 }
 
 type ScreenersCandlestick struct {
-	Screener string `json:"screener"`
+	ScreenerId string `json:"screener_id"`
 }
 
 type ScreenersTechnical struct {
-	Screener string `json:"screener"`
+	ScreenerId string `json:"screener_id"`
+}
+
+type ExpiryDatesRequest struct {
+	UnderlyingSymbol string `json:"symbol"`
+	RangeFrom        string `json:"range_from"`
+	RangeTo          string `json:"range_to"`
+	DateFormat       string `json:"date_format"`
+}
+
+type HistoryUnderlyingSymbolsRequest struct {
+	UnderlyingSymbol string `json:"symbol"`
+	ExpiryDate       string `json:"expiry_date"`
+}
+
+type FuturesChainRequest struct {
+	Symbol string `json:"symbol"`
+}
+
+type ExpiryDatesResponse struct {
+	APIResponse
+	Data ExpiryDatesData `json:"data"`
+}
+
+type ExpiryDatesData struct {
+	Symbol      string       `json:"symbol"`
+	FromDate    string       `json:"from_date"`
+	ToDate      string       `json:"to_date"`
+	ExpiryDates ExpiryBucket `json:"expiry_dates"`
+}
+
+type ExpiryBucket struct {
+	Futures []string `json:"futures"`
+	Options []string `json:"options"`
+}
+
+type HistoryUnderlyingSymbolsResponse struct {
+	APIResponse
+	Data HistoryUnderlyingSymbolsData `json:"data"`
+}
+
+type HistoryUnderlyingSymbolsData struct {
+	Symbol     string       `json:"symbol"`
+	ExpiryDate string       `json:"expiry_date"`
+	Contracts  ExpiryBucket `json:"contracts"`
+}
+
+type FuturesChainResponse struct {
+	APIResponse
+	Data []FuturesChainItem `json:"data"`
+}
+
+type FuturesChainItem struct {
+	Ch         float64 `json:"ch"`
+	Chp        float64 `json:"chp"`
+	Expiry     string  `json:"expiry"`
+	ExpiryDate string  `json:"expiry_date"`
+	FyToken    string  `json:"fyToken"`
+	Lp         float64 `json:"lp"`
+	Oi         int     `json:"oi"`
+	Symbol     string  `json:"symbol"`
+	Volume     int     `json:"volume"`
 }

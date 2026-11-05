@@ -1,6 +1,7 @@
 package fyersgosdk
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -36,6 +37,25 @@ func (m *FyersModel) GetStockQuotes(symbols []string) (string, error) {
 	return string(resp.Body), nil
 }
 
+func (m *FyersModel) GetStockQuotesV2(symbols []string) (string, error) {
+	if len(symbols) == 0 {
+		return "", fmt.Errorf("at least one symbol required")
+	}
+
+	body, err := json.Marshal(map[string][]string{"symbols": symbols})
+	if err != nil {
+		return "", fmt.Errorf("marshal symbols: %w", err)
+	}
+
+	headers := m.authHeader()
+	headers.Set("Content-Type", "application/json")
+	resp, err := m.httpClient.DoRaw(http.MethodPost, StockQuotesV2URL, body, headers)
+	if err != nil {
+		return "", err
+	}
+	return string(resp.Body), nil
+}
+
 func (m *FyersModel) GetMarketDepth(req MarketDepthRequest) (string, error) {
 	params := url.Values{
 		"symbol":     {req.Symbol},
@@ -56,6 +76,68 @@ func (m *FyersModel) GetOptionChain(req OptionChainRequest) (string, error) {
 		"greeks":      {req.Greeks},
 	}
 	resp, err := m.httpClient.Do(http.MethodGet, OptionChainURl, params, m.authHeader())
+	if err != nil {
+		return "", err
+	}
+	return string(resp.Body), nil
+}
+
+func (m *FyersModel) GetExpiryDates(req ExpiryDatesRequest) (string, error) {
+	params := url.Values{}
+	params.Set("symbol", req.UnderlyingSymbol)
+	params.Set("range_from", req.RangeFrom)
+	params.Set("range_to", req.RangeTo)
+	params.Set("date_format", req.DateFormat)
+
+	resp, err := m.httpClient.Do(http.MethodGet, ExpiryDatesURL, params, m.authHeader())
+	if err != nil {
+		return "", err
+	}
+	return string(resp.Body), nil
+}
+
+func (m *FyersModel) GetHistoryUnderlyingSymbols(req HistoryUnderlyingSymbolsRequest) (string, error) {
+	params := url.Values{}
+	params.Set("symbol", req.UnderlyingSymbol)
+	params.Set("expiry_date", req.ExpiryDate)
+
+	resp, err := m.httpClient.Do(http.MethodGet, HistoryUnderlyingSymbolsURL, params, m.authHeader())
+	if err != nil {
+		return "", err
+	}
+	return string(resp.Body), nil
+}
+
+func (m *FyersModel) GetFuturesChain(req FuturesChainRequest) (string, error) {
+	if req.Symbol == "" {
+		return "", fmt.Errorf("symbol is required")
+	}
+
+	params := url.Values{}
+	params.Set("symbol", req.Symbol)
+
+	resp, err := m.httpClient.Do(http.MethodGet, FuturesChainURL, params, m.authHeader())
+	if err != nil {
+		return "", err
+	}
+	return string(resp.Body), nil
+}
+
+func (m *FyersModel) GetFNOHistoricalData(req FNOHistoricalDataRequest) (string, error) {
+	params := url.Values{}
+	params.Set("symbol", req.Symbol)
+	params.Set("resolution", req.Resolution)
+	params.Set("date_format", req.DateFormat)
+	params.Set("range_from", req.RangeFrom)
+	params.Set("range_to", req.RangeTo)
+	if req.IncludeOi != "" {
+		params.Set("include_oi", req.IncludeOi)
+	}
+	if req.IncludeGreeks != "" {
+		params.Set("include_greeks", req.IncludeGreeks)
+	}
+
+	resp, err := m.httpClient.Do(http.MethodGet, FNOHistoricalDataURL, params, m.authHeader())
 	if err != nil {
 		return "", err
 	}

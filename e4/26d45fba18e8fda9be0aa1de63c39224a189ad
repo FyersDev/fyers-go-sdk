@@ -1,0 +1,14 @@
+go.mod
+  h_2d703f756f0117 5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e426d45fba18e8fda9be0aa1de63c39224a189ad",
+  "prompts": {},
+  "humans": {
+    "h_2d703f756f0117": {
+      "author": "Preethi Harimoorthy <em1112@FYPLMB10250.local>"
+    }
+  }
+}

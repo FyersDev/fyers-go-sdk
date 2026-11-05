@@ -1,0 +1,32 @@
+README.md
+  h_2d703f756f0117 3,21-23,104-108,118-168,287,391-401,435-448,454-455,459-467,473-475,517,596-603,623-624,639,649,654-659,662
+api.go
+  h_2d703f756f0117 15-62
+data.go
+  h_2d703f756f0117 4,40-58,84-145
+data_stream.go
+  h_2d703f756f0117 28
+examples/fyers/fyers.go
+  h_2d703f756f0117 1215-1239,1242,1244-1321,1343-1598
+http.go
+  h_2d703f756f0117 75,95,100,103-104
+models.go
+  h_2d703f756f0117 599-608,862-874,878,882-943
+screeners.go
+  h_2d703f756f0117 21,24-31,35,48,65,78-86
+websocket/data_ws.go
+  h_2d703f756f0117 644-645,651-733
+websocket/defines.go
+  h_2d703f756f0117 37-47
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1d1881ffca9844485f702b79d681bd9b87748804",
+  "prompts": {},
+  "humans": {
+    "h_2d703f756f0117": {
+      "author": "Preethi Harimoorthy <em1112@FYPLMB10250.local>"
+    }
+  }
+}

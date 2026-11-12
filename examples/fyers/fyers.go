@@ -1576,6 +1576,37 @@ package main
 // 	}
 // }
 
+// Activate Kill Switch - WARNING: this blocks trading on the account.
+// If it is already active the API returns HTTP 400 with
+// {"code": 1500, "message": "Already on break, Please enjoy the break", "s": "error"}.
+// That body comes back as the response string (err is nil), so check "s".
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+// 	response, err := fyModel.ActivateKillswitch()
+// 	if err != nil {
+// 		fmt.Printf("Error activating kill switch: %v", err)
+// 	} else {
+// 		fmt.Println("Activate kill switch: ", response)
+// 	}
+// }
+
+// Kill Switch Status
+// func main() {
+// 	appId := "AAAAAAAAA-100"
+// 	accessToken := "eyjb...."
+
+// 	fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+// 	response, err := fyModel.GetKillswitchStatus()
+// 	if err != nil {
+// 		fmt.Printf("Error getting kill switch status: %v", err)
+// 	} else {
+// 		fmt.Println("Kill switch status: ", response)
+// 	}
+// }
+
 // Error handling - the API rejects a bad request with the body
 // {"code": -50, "message": "<reason>", "s": "error", "data": null}
 // and the message says exactly what was wrong. The response is returned as a

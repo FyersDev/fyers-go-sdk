@@ -89,16 +89,14 @@ func (sc *symbolConversion) getIndexHSMMapping(
 		sc.dataLogger.Debug(
 			"S3 index mapping load failed. Falling back to map.json index_dict.",
 		)
-		// API call failed -> use local map.json.
-		indexHSMMappingCache = fallbackIndexDict
-	} else {
-		sc.dataLogger.Debug(
-			"API index mapping load succeeded. Caching API mapping.",
-		)
-		// API call succeeded -> cache API mapping.
-		indexHSMMappingCache = indexDict
+		return fallbackIndexDict
 	}
 
+	sc.dataLogger.Debug(
+		"API index mapping load succeeded. Caching API mapping.",
+	)
+	// API call succeeded -> cache API mapping.
+	indexHSMMappingCache = indexDict
 	return indexHSMMappingCache
 }
 
@@ -148,7 +146,8 @@ func (sc *symbolConversion) symbolToHSMToken(symbols []string) (map[string]strin
 		return nil, nil, false, ""
 	}
 
-	indexDict := sc.getIndexHSMMapping(mapData["index_dict"].(map[string]interface{}))
+	localIndexDict, _ := mapData["index_dict"].(map[string]interface{})
+	indexDict := sc.getIndexHSMMapping(localIndexDict)
 	exchSegDict := mapData["exch_seg_dict"].(map[string]interface{})
 
 	dataDict := make(map[string]string)
@@ -174,6 +173,8 @@ func (sc *symbolConversion) symbolToHSMToken(symbols []string) (map[string]strin
 				var exchToken string
 				if indexToken, exists := indexDict[symbol]; exists {
 					exchToken = indexToken.(string)
+				} else if localToken, exists := localIndexDict[symbol]; exists {
+					exchToken = localToken.(string)
 				} else {
 					parts := strings.Split(symbol, ":")
 					if len(parts) > 1 {
@@ -250,10 +251,22 @@ func (sc *symbolConversion) getIndexDictMapJSON() (map[string]interface{}, error
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("index HSM mapping JSON returned HTTP %d", resp.StatusCode)
+	}
+
 	data, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read index HSM mapping JSON: %w", err)
+	}
+
+	// Unmarshal into a map.
 	var mapData map[string]interface{}
 	if err := json.Unmarshal(data, &mapData); err != nil {
 		return nil, fmt.Errorf("failed to parse index HSM mapping JSON: %w", err)
+	}
+	if len(mapData) == 0 {
+		return nil, fmt.Errorf("index HSM mapping JSON is empty or unusable")
 	}
 
 	return mapData, nil

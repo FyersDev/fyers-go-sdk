@@ -38,8 +38,9 @@ type symbolConversion struct {
 }
 
 var (
-	indexHSMMappingCache map[string]interface{}
-	indexHSMMappingMutex sync.Mutex
+	indexHSMMappingCache    map[string]interface{}
+	indexHSMMappingMutex    sync.Mutex
+	indexHSMMappingFetching bool
 )
 
 func newSymbolConversion(accessToken, dataType, logPath string) *symbolConversion {
@@ -73,30 +74,41 @@ func (sc *symbolConversion) getIndexHSMMapping(
 ) map[string]interface{} {
 
 	indexHSMMappingMutex.Lock()
-	defer indexHSMMappingMutex.Unlock()
-
 	// Already loaded in memory.
 	if indexHSMMappingCache != nil {
+		cached := indexHSMMappingCache
+		indexHSMMappingMutex.Unlock()
 		sc.dataLogger.Debug(
 			"Index mapping already loaded in memory. Returning cached mapping.",
 		)
-		return indexHSMMappingCache
+		return cached
 	}
 
+	if indexHSMMappingFetching {
+		indexHSMMappingMutex.Unlock()
+		return fallbackIndexDict
+	}
+	indexHSMMappingFetching = true
+	indexHSMMappingMutex.Unlock()
+
 	indexDict, err := sc.getIndexDictMapJSON()
+
+	indexHSMMappingMutex.Lock()
+	defer indexHSMMappingMutex.Unlock()
+	indexHSMMappingFetching = false
 	if err != nil {
 		sc.dataLogger.Exception(err)
 		sc.dataLogger.Debug(
 			"S3 index mapping load failed. Falling back to map.json index_dict.",
 		)
-		return fallbackIndexDict
+		indexHSMMappingCache = fallbackIndexDict
+	} else {
+		sc.dataLogger.Debug(
+			"API index mapping load succeeded. Caching API mapping.",
+		)
+		// API call succeeded -> cache API mapping.
+		indexHSMMappingCache = indexDict
 	}
-
-	sc.dataLogger.Debug(
-		"API index mapping load succeeded. Caching API mapping.",
-	)
-	// API call succeeded -> cache API mapping.
-	indexHSMMappingCache = indexDict
 	return indexHSMMappingCache
 }
 

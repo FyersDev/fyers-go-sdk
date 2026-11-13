@@ -1,0 +1,23 @@
+websocket/protocol.go
+  s_038171bd049411::t_c5d29ee0815d4a 254-257,259-263,268
+  s_038171bd049411::t_d27d9fc0ece38e 92,95-99
+  s_038171bd049411::t_6e8a35962e6180 176-177
+  s_038171bd049411::t_7d61d96efb62c9 149-150
+  s_038171bd049411::t_6a010d0f55c994 269-270
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "76a146b456162af792cad4e718d212674363297f",
+  "prompts": {},
+  "sessions": {
+    "s_038171bd049411": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "10e57a64-8107-4545-9b91-dcab0221b288",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Preethi Harimoorthy <em1112@FYPLMB10250.local>"
+    }
+  }
+}

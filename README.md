@@ -490,6 +490,74 @@ All API methods return `(string, error)`; the string is the raw JSON response. U
 | `DeleteAlert(alertId string) (string, error)` | Delete alert. |
 | `ToggleAlert(alertId string) (string, error)` | Toggle alert. |
 
+### Kill Switch (FyersModel)
+
+| Method | Description |
+|--------|-------------|
+| `ActivateKillswitch() (string, error)` | Activate the kill switch (`POST /killswitch/activate`, empty `{}` body). |
+| `GetKillswitchStatus() (string, error)` | Kill switch status, open positions and pending orders (`GET /killswitch/status`). |
+
+> ⚠️ **Activating the kill switch blocks trading on the account.** Only call `ActivateKillswitch` when you mean to.
+
+**Error handling.** As with every other method in this SDK, an API-level error is not a Go `error`. The HTTP 400 "already active" response body is returned unchanged as the string, with `err == nil`. Check `"s"` in the JSON. `err` is non-nil only for transport failures (network, timeout, unreadable body).
+
+```go
+fyModel := fyersgosdk.NewFyersModel(appId, accessToken)
+
+// Activate (blocks trading on the account)
+response, err := fyModel.ActivateKillswitch()
+if err != nil {
+	fmt.Printf("Error activating kill switch: %v\n", err)
+	return
+}
+var result struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+	S       string `json:"s"`
+}
+if err := json.Unmarshal([]byte(response), &result); err != nil {
+	fmt.Printf("Unexpected response: %s\n", response)
+	return
+}
+if result.S != "ok" {
+	fmt.Printf("Kill switch not activated (code %d): %s\n", result.Code, result.Message)
+	return
+}
+fmt.Println("Kill switch activated:", result.Message)
+
+// Status
+status, err := fyModel.GetKillswitchStatus()
+if err != nil {
+	fmt.Printf("Error getting kill switch status: %v\n", err)
+	return
+}
+fmt.Println("Kill switch status:", status)
+```
+
+Activate, success (HTTP 200):
+
+```json
+{"code": 200, "message": "Client placed on Break. ", "s": "ok"}
+```
+
+Activate, already active (HTTP 400):
+
+```json
+{"code": 1500, "message": "Already on break, Please enjoy the break", "s": "error"}
+```
+
+Status, not active:
+
+```json
+{"killswitch": false, "openPositions": 0, "pendingOrders": 0, "message": "Kill Switch is not activated."}
+```
+
+Status, active:
+
+```json
+{"killswitch": true, "openPositions": 0, "pendingOrders": 0, "message": "Kill Switch is activated."}
+```
+
 ### WebSocket (package-level)
 
 | Function | Description |
@@ -643,6 +711,10 @@ All runnable examples live in **[examples/fyers/fyers.go](examples/fyers/fyers.g
 - **Modify Price Alert** – `UpdateAlert`
 - **Delete Price Alert** – `DeleteAlert`
 - **Enable/Disable Price Alert** – `ToggleAlert`
+
+### Kill Switch
+- **Activate Kill Switch** – `ActivateKillswitch`
+- **Kill Switch Status** – `GetKillswitchStatus`
 
 ### Market Data & Broker
 - **Market Status** – `GetMarketStatus`

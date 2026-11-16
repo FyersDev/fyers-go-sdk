@@ -24,7 +24,9 @@ func (m *FyersModel) ActivateKillswitch() (string, error) {
 
 // GetKillswitchStatus returns whether the kill switch is active, along with
 // open positions and pending orders (GET /killswitch/status).
-// The response body is returned unchanged as a JSON string.
+// The response body is returned unchanged as a JSON string. A success body
+// carries "s": "ok" and "code": 200 alongside the status fields; older or
+// cached responses may omit them, so callers should not require them.
 func (m *FyersModel) GetKillswitchStatus() (string, error) {
 	resp, err := m.httpClient.DoRaw(http.MethodGet, KillswitchStatusURL, nil, m.authHeader())
 	if err != nil {

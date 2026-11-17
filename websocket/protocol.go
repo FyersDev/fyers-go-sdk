@@ -11,7 +11,10 @@ import (
 	"runtime"
 	"strings"
 	"sync"
+	"time"
 )
+
+var indexHSMMappingHTTPTimeout = 20 * time.Second
 
 type Protocol interface {
 	Encode() []byte
@@ -183,10 +186,10 @@ func (sc *symbolConversion) symbolToHSMToken(symbols []string) (map[string]strin
 			var hsmSymbol string
 			if len(symbolSplit) > 1 && symbolSplit[len(symbolSplit)-1] == "INDEX" && sc.dataType != "DepthUpdate" {
 				var exchToken string
-				if indexToken, exists := indexDict[symbol]; exists {
-					exchToken = indexToken.(string)
-				} else if localToken, exists := localIndexDict[symbol]; exists {
-					exchToken = localToken.(string)
+				if indexToken, ok := indexDict[symbol].(string); ok {
+					exchToken = indexToken
+				} else if localToken, ok := localIndexDict[symbol].(string); ok {
+					exchToken = localToken
 				} else {
 					parts := strings.Split(symbol, ":")
 					if len(parts) > 1 {
@@ -257,7 +260,8 @@ func (sc *symbolConversion) loadMapJSON() (map[string]interface{}, error) {
 }
 
 func (sc *symbolConversion) getIndexDictMapJSON() (map[string]interface{}, error) {
-	resp, err := http.Get(INDEX_HSM_MAPPING_URL)
+	client := &http.Client{Timeout: indexHSMMappingHTTPTimeout}
+	resp, err := client.Get(INDEX_HSM_MAPPING_URL)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get index HSM mapping JSON: %w", err)
 	}

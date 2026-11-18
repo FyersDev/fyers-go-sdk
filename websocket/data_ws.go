@@ -395,8 +395,10 @@ func (f *FyersDataSocket) AccessTokenToHSMToken() bool {
 		}
 	}
 
-	if hsmKey, exists := payload["hsm_key"]; exists {
-		f.hsmToken = hsmKey.(string)
+	// The token must still carry hsm_key, but the connect message now sends the
+	// full access token (APPID:JWT, as supplied) as the session id, not hsm_key.
+	if _, exists := payload["hsm_key"]; exists {
+		f.hsmToken = f.accessToken
 		return true
 	}
 

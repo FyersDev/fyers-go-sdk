@@ -60,4 +60,6 @@ const (
 	HistoryUnderlyingSymbolsURL = BaseDataURL + "/history/fno/expired/underlying-symbols"
 	FuturesChainURL             = BaseDataURL + "/futures-chain"
 	FNOHistoricalDataURL        = BaseDataURL + "/history/fno/expired/historical-data"
+	KillswitchActivateURL       = BaseURL + "/killswitch/activate"
+	KillswitchStatusURL         = BaseURL + "/killswitch/status"
 )

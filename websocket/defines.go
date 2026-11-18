@@ -45,4 +45,6 @@ const (
 
 	CUSTOM_MSG_RESP_TYPE       = 51
 	SYMBOL_LIMIT_EXCEEDED_CODE = 51001
+
+	INDEX_HSM_MAPPING_URL = "https://public.fyers.in/sym_details/index_hsm_mapping.json"
 )
